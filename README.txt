@@ -58,23 +58,21 @@ Start Game
                 Display sank ship
                 Remove ship from Player 1's array(?), Armada
 
-See Stats
 
+Compiling Player Stats Function
+Display Stats Function
 Randomize Function
 Check Legal Square Function
 Allow board to be used Function
 
-Armada Class
+Armada Class (players ship array(?) w/ their stats(?))
 Ship Class  (can i use preset ships so no changes to ships) 
-
-Function for Player Stats
 
 AI Placement Algorithm
     Randomize first mark
         Check if legal for every mark
             Continue vertically or horizontally
     Check inventory (remaining ships)
-
 
 AI Algorithm
     If none hit
