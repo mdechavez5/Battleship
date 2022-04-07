@@ -59,6 +59,15 @@ function sumWP(arr) {
 }
 // console.log(sumWP(sL)[1]);
 
+// Function to change color of ships
+function colorShip(i,sq){
+    if(i===0) sq.classList.add('red')
+    else if(i===1) sq.classList.add('blue')
+    else if(i===2) sq.classList.add('green')
+    else if(i===3) sq.classList.add('yellow')
+    else if(i===4) sq.classList.add('orange')
+}
+
 squares.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
@@ -72,86 +81,110 @@ squares.forEach( square => {
         // console.log(`shipArr.length: ${shipArr.length}`)
         console.log(shipArr)
 
-        if ( gameCount < sLL[0] && checkLegal(squareValue) ){
-            gameCount++;
-            console.log(`gameCount: ${gameCount}`);
-            oldSquare = squareValue;
-            shipArr.push(squareValue);
-            mainContainer.push(squareValue)
-            console.log(`shipArr.length: ${shipArr.length}`)
-            console.log("shipArr: "); 
-            console.log(shipArr);
-            square.classList.add('red');
-            // console.log(square)
-            if(shipArr.length === sL[0]){
-                shipsArr.push(shipArr);
-                shipArr = [];
-                oldSquare = -2;
-                console.log(`oldSquare ${oldSquare}`);
-            }
-
-        } else if (gameCount < sLL[1] && checkLegal(squareValue) ){
-            gameCount++;
-            console.log(`gameCount: ${gameCount}`);
-            oldSquare = squareValue;
-            shipArr.push(squareValue);
-            mainContainer.push(squareValue)
-            console.log(`shipArr.length: ${shipArr.length}`)
-            console.log("shipArr: ");
-            console.log(shipArr);
-            square.classList.add('blue');
-            if(shipArr.length === sL[1]){
-                shipsArr.push(shipArr);
-                shipArr = [];
-                oldSquare = -2;
-            }
-
-        } else if (gameCount < sLL[2] && checkLegal(squareValue) ){
-            gameCount++;
-            console.log(`gameCount: ${gameCount}`);
-            oldSquare = squareValue;
-            shipArr.push(squareValue)
-            mainContainer.push(squareValue)
-            console.log(`shipArr.length: ${shipArr.length}`)
-            console.log("shipArr: ");
-            console.log(shipArr);
-            square.classList.add('green');
-            if(shipArr.length === sL[2]){
-                shipsArr.push(shipArr);
-                shipArr = [];
-                oldSquare = -2;
-            }
-            
-        } else if (gameCount < sLL[3] && checkLegal(squareValue) ){
-            gameCount++;
-            console.log(`gameCount: ${gameCount}`);
-            oldSquare = squareValue;
-            shipArr.push(squareValue);
-            console.log(`shipArr.length: ${shipArr.length}`)
-            console.log("shipArr: ");
-            console.log(shipArr);
-            square.classList.add('yellow');
-            if(shipArr.length === sL[3]){
-                shipsArr.push(shipArr);
-                shipArr = [];
-                oldSquare = -2;
-            }
-            
-        } else if (gameCount < sLL[4] && checkLegal(squareValue) ){
-            gameCount++;
-            console.log(`gameCount: ${gameCount}`);
-            oldSquare = squareValue;
-            shipArr.push(squareValue);
-            console.log(`shipArr.length: ${shipArr.length}`)
-            console.log("shipArr: ");
-            console.log(shipArr);
-            square.classList.add('orange');
-            if(shipArr.length === sL[4]){
-                shipsArr.push(shipArr);
-                shipArr = [];
-                oldSquare = -2;
+        for(let i=0; i<sLL.length; i++){
+            if ( gameCount < sLL[i] && checkLegal(squareValue) ){
+                gameCount++;
+                console.log(`gameCount: ${gameCount}`);
+                oldSquare = squareValue;
+                shipArr.push(squareValue);
+                mainContainer.push(squareValue)
+                console.log(`shipArr.length: ${shipArr.length}`)
+                console.log("shipArr: "); 
+                console.log(shipArr);
+                colorShip(i,square)
+                // square.classList.add('red');
+                console.log(square)
+                if(shipArr.length === sL[i]){
+                    shipsArr.push(shipArr);
+                    shipArr = [];
+                    oldSquare = -2;
+                    console.log(`oldSquare ${oldSquare}`);
+                }
             }
         }
+
+
+
+        // if ( gameCount < sLL[0] && checkLegal(squareValue) ){
+        //     gameCount++;
+        //     console.log(`gameCount: ${gameCount}`);
+        //     oldSquare = squareValue;
+        //     shipArr.push(squareValue);
+        //     mainContainer.push(squareValue)
+        //     console.log(`shipArr.length: ${shipArr.length}`)
+        //     console.log("shipArr: "); 
+        //     console.log(shipArr);
+        //     square.classList.add('red');
+        //     // console.log(square)
+        //     if(shipArr.length === sL[0]){
+        //         shipsArr.push(shipArr);
+        //         shipArr = [];
+        //         oldSquare = -2;
+        //         console.log(`oldSquare ${oldSquare}`);
+        //     }
+
+        // } else if (gameCount < sLL[1] && checkLegal(squareValue) ){
+        //     gameCount++;
+        //     console.log(`gameCount: ${gameCount}`);
+        //     oldSquare = squareValue;
+        //     shipArr.push(squareValue);
+        //     mainContainer.push(squareValue)
+        //     console.log(`shipArr.length: ${shipArr.length}`)
+        //     console.log("shipArr: ");
+        //     console.log(shipArr);
+        //     square.classList.add('blue');
+        //     if(shipArr.length === sL[1]){
+        //         shipsArr.push(shipArr);
+        //         shipArr = [];
+        //         oldSquare = -2;
+        //     }
+
+        // } else if (gameCount < sLL[2] && checkLegal(squareValue) ){
+        //     gameCount++;
+        //     console.log(`gameCount: ${gameCount}`);
+        //     oldSquare = squareValue;
+        //     shipArr.push(squareValue)
+        //     mainContainer.push(squareValue)
+        //     console.log(`shipArr.length: ${shipArr.length}`)
+        //     console.log("shipArr: ");
+        //     console.log(shipArr);
+        //     square.classList.add('green');
+        //     if(shipArr.length === sL[2]){
+        //         shipsArr.push(shipArr);
+        //         shipArr = [];
+        //         oldSquare = -2;
+        //     }
+            
+        // } else if (gameCount < sLL[3] && checkLegal(squareValue) ){
+        //     gameCount++;
+        //     console.log(`gameCount: ${gameCount}`);
+        //     oldSquare = squareValue;
+        //     shipArr.push(squareValue);
+        //     console.log(`shipArr.length: ${shipArr.length}`)
+        //     console.log("shipArr: ");
+        //     console.log(shipArr);
+        //     square.classList.add('yellow');
+        //     if(shipArr.length === sL[3]){
+        //         shipsArr.push(shipArr);
+        //         shipArr = [];
+        //         oldSquare = -2;
+        //     }
+            
+        // } else if (gameCount < sLL[4] && checkLegal(squareValue) ){
+        //     gameCount++;
+        //     console.log(`gameCount: ${gameCount}`);
+        //     oldSquare = squareValue;
+        //     shipArr.push(squareValue);
+        //     console.log(`shipArr.length: ${shipArr.length}`)
+        //     console.log("shipArr: ");
+        //     console.log(shipArr);
+        //     square.classList.add('orange');
+        //     if(shipArr.length === sL[4]){
+        //         shipsArr.push(shipArr);
+        //         shipArr = [];
+        //         oldSquare = -2;
+        //     }
+        // }
     })
 })
 
@@ -159,9 +192,9 @@ function checkLegal(value){
     // if(gameCount = 0 && shipArr.length === 0) return false
     let check1 = hasNotBeenPickedAlready(value)
     let check2 = isAdjacent(value)
+    console.log(`check1: ${check1}`);
+    console.log(`check2: ${check2}`);
     if( check1 && check2 ){
-        console.log(`check1: ${check1}`);
-        console.log(`check2: ${check2}`);
         return true
     } 
     return false
