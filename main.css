@@ -1,0 +1,90 @@
+body {
+    margin: 0 auto;
+}
+
+div {
+    display: flex;
+    border: 1px solid red;
+    margin: 0 auto;
+}
+
+.testboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;    /*x-axis center */
+    /* align-items: center;*/   /*y-axis center*/
+    align-content: center;
+    height: 300px;
+    width: 300px;
+}
+
+.square {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    background-color: lightgray;
+    margin: 0;
+}
+
+button {
+    height: 50px;
+    width: 150px;
+}
+button:hover {
+    background-color: lightblue;
+}
+
+.red {
+    background-color: pink;
+}
+
+.blue {
+    background-color: lightblue;
+}
+
+.orange {
+    background-color: lightsalmon;
+}
+
+.green {
+    background-color: lightgreen;
+}
+
+
+
+/* .container {
+    display: flex;
+    padding: 50px 0;
+}
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    height: 550px;
+    width: 550px;
+    margin: 0 auto;
+}
+
+.horizontal-container {
+    height: 9%;
+    width: 100%;
+    background-color: grey;
+}
+
+.vertical-container {
+    height: 90%;
+    width: 9%;
+    background-color: grey;
+}
+
+.player-board {
+    height: 90%;
+    width: 90%;
+}
+
+
+.ctr-btn {
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+    margin: 0 auto;
+} */
