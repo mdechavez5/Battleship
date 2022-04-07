@@ -1,7 +1,7 @@
 
 const div = document.querySelector('div')
 const board = document.querySelector('.testboard')
-console.log(board);
+// console.log(board);
 
 // let square = document.createElement("div");
 // square.classList.add('square');
@@ -58,9 +58,12 @@ const squares = document.querySelectorAll('.square')
 //     event.preventDefault();
 // })
 
-let gameCount = 0;
-let pickedArr = [];
+let gameCount = -1;
+let shipArr = [];
+let shipsArr = []
+let oldSquare = -1;
 let sL = [2,3,3,4,5]; //shipLength
+let sLL = [2,5,8,12,17] //add current and previous entries into current index
 
 //sumWithPrevious
 function sumWP(arr) {
@@ -70,88 +73,205 @@ function sumWP(arr) {
     for( let i=0; i<arrSize; i++){
         newInt += arr.shift();
         newArr.push(newInt);
-        console.log(newArr)
+        // console.log(newArr)
     }
     return newArr;
 }
-console.log(sumWP(sL)[1]);
+// console.log(sumWP(sL)[1]);
 
 squares.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
 
         // Get square's value
-        console.log(`gameCount: ${gameCount}`);
-        let squareValue = square.getAttribute('value');
+        console.log(square)
+        
+        let squareValue = parseInt(square.getAttribute('value'));
         console.log(`squareValue: ${squareValue}`);
+        // console.log(`checkLegal: ${checkLegal(squareValue)}`)
+        // console.log(`shipArr.length: ${shipArr.length}`)
+        console.log(shipArr)
 
-        if ( gameCount < (2) && checkLegal(squareValue) ){
-            // console.log(square.getAttribute('value'));
-            pickedArr.push( square.getAttribute('value'))
-            console.log("pickedArr: "); 
-            console.log(pickedArr);
+        if ( gameCount < sLL[0] && checkLegal(squareValue) ){
+            console.log(`gameCount: ${gameCount}`);
+            gameCount++;
+            oldSquare = squareValue;
+            shipArr.push(squareValue);
+            console.log(`shipArr.length: ${shipArr.length}`)
+            console.log("shipArr: "); 
+            console.log(shipArr);
             square.classList.add('red');
             // console.log(square)
-            gameCount++;
+            if(shipArr.length === sL[0]){
+                shipsArr.push(shipArr);
+                shipArr = [];
+                oldSquare = -1;
+            }
 
-        } else if (gameCount < (5) && checkLegal(squareValue) ){
-            pickedArr.push( square.getAttribute('value'))
-            console.log("pickedArr: ");
-            console.log(pickedArr);
-            square.classList.add('blue')
+        } else if (gameCount < sLL[1] && checkLegal(squareValue) ){
             gameCount++;
+            console.log(`gameCount: ${gameCount}`);
+            oldSquare = squareValue;
+            shipArr.push(squareValue);
+            console.log(`shipArr.length: ${shipArr.length}`)
+            console.log("shipArr: ");
+            console.log(shipArr);
+            square.classList.add('blue');
+            if(shipArr.length === sL[1]){
+                shipsArr.push(shipArr);
+                shipArr = [];
+                oldSquare = -1;
+            }
+        
+            
 
-        } else if (gameCount < (8) && checkLegal(squareValue) ){
-            pickedArr.push( square.getAttribute('value'))
-            console.log("pickedArr: ");
-            console.log(pickedArr);
-            square.classList.add('green')
+        } else if (gameCount < sLL[2] && checkLegal(squareValue) ){
             gameCount++;
+            console.log(`gameCount: ${gameCount}`);
+            oldSquare = squareValue;
+            shipArr.push(squareValue)
+            console.log(`shipArr.length: ${shipArr.length}`)
+            console.log("shipArr: ");
+            console.log(shipArr);
+            square.classList.add('green');
+            if(shipArr.length === sL[2]){
+                shipsArr.push(shipArr);
+                shipArr = [];
+                oldSquare = -1;
+            }
+            
+        } else if (gameCount < sLL[3] && checkLegal(squareValue) ){
+            gameCount++;
+            console.log(`gameCount: ${gameCount}`);
+            oldSquare = squareValue;
+            shipArr.push(squareValue);
+            console.log(`shipArr.length: ${shipArr.length}`)
+            console.log("shipArr: ");
+            console.log(shipArr);
+            square.classList.add('orange');
+            if(shipArr.length === sL[3]){
+                shipsArr.push(shipArr);
+                shipArr = [];
+                oldSquare = -1;
+            }
+            
+        } else if (gameCount < sLL[4] && checkLegal(squareValue) ){
+            gameCount++;
+            console.log(`gameCount: ${gameCount}`);
+            oldSquare = squareValue;
+            shipArr.push(squareValue);
+            console.log(`shipArr.length: ${shipArr.length}`)
+            console.log("shipArr: ");
+            console.log(shipArr);
+            square.classList.add('blue');
+            if(shipArr.length === sL[4]){
+                shipsArr.push(shipArr);
+                shipArr = [];
+                oldSquare = -1;
+            }
+        
+            
+
         }
     })
 })
 
 function checkLegal(value){
-    if(hasBeenPickedAlready(value)){
-        return false
-    }
-    return true
+    // if(gameCount = 0 && shipArr.length === 0) return false
+    let check1 = hasNotBeenPickedAlready(value)
+    let check2 = isAdjacent(value)
+    if( check1 && check2 ){
+        console.log(`check1: ${check1}`);
+        console.log(`check2: ${check2}`);
+        return true
+    } 
+    return false
 }
 
-//is squareVal = prevSquareVal - 10       (above)
-//is squareVal = prevSquareVal + 10       (below)
-//is squareVal = prevSquareVal + 1       (right)
-//is squareVal = prevSquareVal + 10       (down)
-// function isAdjacent(value){
-//     // Checking each value in pickedArr for pattern
-//     pickedArr.forEach(val => {
-        
-//     })
-//     let valAbove = pickedArr.includes(value) - gameHeight
-//     let valBelow = pickedArr.includes(value) + gameHeight
-//     let valRight = pickedArr.includes(value) + 1
-//     let valLeft = pickedArr.includes(value) - 1
-    
+// let arrtest1 = [2,7,12,17,22]
+// let arrtest2 = [16,17,18,19,20]
+// console.log(arrtest1.length)
+// let a = arrtest1.sort(function(a,b){return a-b})
+// console.log(a)
 
-//     if(pickedArr.includes(value)){
-
+// let testcount = 0
+// for(let i=arrtest1.length-1; i>0; i--){
+//     if( (arrtest1[i] - arrtest1[i-1]) === 5){
+//         testcount++;
+//         console.log(testcount)
 //     }
+//     if( testcount === arrtest1.length-1){
+//         return true;
+//     }
+//     console.log(testcount)
+//     console.log(`${i}: ${(arrtest1[i] - arrtest1[i-1])}`)
 // }
 
-// Check if square has been picked already
-function hasBeenPickedAlready(value) {
-    if( pickedArr.includes(value) ){
-        console.log("Has been picked already!");
+
+
+// is squareVal = prevSquareVal - 10       (above)
+// is squareVal = prevSquareVal + 10       (below)
+// is squareVal = prevSquareVal + 1       (right)
+// is squareVal = prevSquareVal + 10       (down)
+function isAdjacent(value){
+    // let testcount1 = 0
+    // let testcount2
+    // let testArr = shipArr;
+    // testArr.push(value);
+    // testArr.sort((a,b)=>{return a-b})
+    // //Check Vertical
+    // for(let i=testArr.length-1; i>0; i--){
+    //     if( (testArr[i] - testArr[i-1]) === gameWidth){
+    //         testcount1++;
+    //         console.log(testcount1)
+    //         if( testcount1 === testArr.length-1){
+    //             return true;
+    //         }
+    //     }else if( (testArr[i] - testArr[i-1]) === 1){
+    //         testcount2++;
+    //         console.log(testcount2)
+    //         if( testcount2 === testArr.length-1){
+    //             return true;
+    //         }
+    //     }
+    //     console.log(testcount1)
+    //     console.log(`${i}: ${(testArr[i] - testArr[i-1])}`)
+    // }
+    // return false;
+
+    //     let valBelow = shipArr.includes(value) + gameHeight
+    //     let valRight = shipArr.includes(value) + 1
+    //     let valLeft = shipArr.includes(value) - 1
+    // If first pick for new ship, no previous adjacent square
+    if(oldSquare === (-1)) return true;
+
+    // new on the bottom, new on the top
+    // new on the right, new on the left
+    if( ((value - oldSquare) === gameHeight) || ((oldSquare - value) === gameHeight) ||
+        ((value - oldSquare) === 1) || ((oldSquare - value) === 1)){
         return true;
     }
     return false;
 }
 
-//is squareVal = prevSquareVal - 10       (above)
-//is squareVal = prevSquareVal + 10       (below)
-//is squareVal = prevSquareVal + 1       (right)
-//is squareVal = prevSquareVal + 10       (down)
-
+// Check if square has been picked already
+function hasNotBeenPickedAlready(value) {
+    // if first pick, no squares have been picked yet
+    if(gameCount === (-1)) {
+        gameCount++;
+        return true;
+    }
+    shipsArr.forEach( ship => {
+        if(ship.includes(value)){
+            // found a square that has been used already
+            return false;
+        } 
+    })
+    if (oldSquare === value){
+        return false;
+    }
+    return true;
+}
 
 
 
