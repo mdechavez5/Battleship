@@ -6,7 +6,7 @@ div {
     display: flex;
     border: 1px solid red;
     margin: 0 auto;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 .testboard {
@@ -19,6 +19,7 @@ div {
     width: 300px;
 }
 
+
 .square {
     display: flex;
     height: 50px;
@@ -26,6 +27,13 @@ div {
     background-color: lightgray;
     margin: 0;
 }
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
 
 button {
     height: 50px;
@@ -35,27 +43,10 @@ button:hover {
     background-color: lightblue;
 }
 
-.red {
-    background-color: pink;
-}
 
-.blue {
-    background-color: lightblue;
-}
+/*-------------------------------------------------*/
 
-.orange {
-    background-color: lightsalmon;
-}
-
-.green {
-    background-color: lightgreen;
-}
-.yellow {
-    background-color: lemonchiffon;
-}
-
-
-/* .container {
+.container {
     display: flex;
     padding: 50px 0;
 }
@@ -84,10 +75,48 @@ button:hover {
     width: 90%;
 }
 
+.square {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    background-color: lightgray;
+    margin: 0;
+}
+
+
+#player1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;    
+    align-items: center;  
+    align-content: center;
+    height: 550px;
+    width: 550px;
+}
+
 
 .ctr-btn {
     justify-content: center;
     align-items: center;
     align-content: space-between;
     margin: 0 auto;
-} */
+}
+
+.red {
+    background-color: pink;
+}
+
+.blue {
+    background-color: lightblue;
+}
+
+.orange {
+    background-color: lightsalmon;
+}
+
+.green {
+    background-color: lightgreen;
+}
+.yellow {
+    background-color: lemonchiffon;
+}
