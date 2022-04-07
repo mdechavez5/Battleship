@@ -48,43 +48,34 @@ button:hover {
 
 .container {
     display: flex;
-    padding: 50px 0;
+    padding: 0;
+    margin: 0 auto;
 }
 .board {
     display: flex;
     flex-wrap: wrap;
-    height: 550px;
-    width: 550px;
+    justify-content: center;    
+    align-items: center;  
+    align-content: center;
+    height: 650px;
+    width: 650px;
     margin: 0 auto;
 }
 
 .horizontal-container {
-    height: 9%;
-    width: 100%;
-    background-color: grey;
+    height: 50px;
+    width: 602px;
+    background-color: lightgrey;
 }
 
 .vertical-container {
-    height: 90%;
-    width: 9%;
-    background-color: grey;
-}
-
-.player-board {
-    height: 90%;
-    width: 90%;
-}
-
-.square {
-    display: flex;
-    height: 50px;
+    height: 550px;
     width: 50px;
-    background-color: lightgray;
+    background-color: lightgrey;
     margin: 0;
 }
 
-
-#player1 {
+.player-board {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;    
@@ -92,6 +83,22 @@ button:hover {
     align-content: center;
     height: 550px;
     width: 550px;
+    /* height: 540px;
+    width: 540px; */
+    padding: 0;
+    margin: 0;
+}
+
+.square {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    border: 1px solid white;
+    border-radius: 1px;
+    /* height: 50px;
+    width: 50px; */
+    background-color: rgb(175, 225, 242);
+    margin: 1px;
 }
 
 
@@ -103,20 +110,20 @@ button:hover {
 }
 
 .red {
-    background-color: pink;
+    background-color: red;
 }
 
 .blue {
-    background-color: lightblue;
+    background-color: blue;
 }
 
 .orange {
-    background-color: lightsalmon;
+    background-color: orange;
 }
 
 .green {
-    background-color: lightgreen;
+    background-color: green;
 }
 .yellow {
-    background-color: lemonchiffon;
+    background-color: yellow;
 }
