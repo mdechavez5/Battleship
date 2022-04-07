@@ -6,6 +6,7 @@ div {
     display: flex;
     border: 1px solid red;
     margin: 0 auto;
+    justify-content: center;
 }
 
 .testboard {
@@ -49,7 +50,9 @@ button:hover {
 .green {
     background-color: lightgreen;
 }
-
+.yellow {
+    background-color: lemonchiffon;
+}
 
 
 /* .container {
