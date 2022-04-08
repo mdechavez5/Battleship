@@ -27,6 +27,14 @@ class Ship {
     squareHit(){
         this.squaresHit++;
     }
+    checkOrientation(){
+       if( (this.squares[0].value-this.squares[1].value) === 1 ||
+            (this.squares[0].value-this.squares[1].value) === -1 ){
+                this.isHorizontal = true;
+       }else {
+           this.isVertical = true;
+       }
+    }
 }
 
 class ShipSquare {
@@ -188,6 +196,7 @@ squares.forEach( square => {
                     // When all shipSquares have been placed, the ship is ready to be created and added to player's array
                     if(shipArr.length === sL[i]){
                         Marc.addShip(ship)
+                        Marc.ships[i].checkOrientation();
                         ship = new Ship()
                         shipsArr.push(shipArr)
                         shipArr = [];
@@ -295,15 +304,21 @@ function convertTo(value){
     let test3 = convertResult.split('.')
     // console.log(test3);
     let result = ''
-    if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
-    else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
-    else if(test3[1]==='3') result = "c"+(parseInt(test3[0])+1)
-    else if(test3[1]==='4') result = "d"+(parseInt(test3[0])+1)
-    else if(test3[1]==='5') result = "e"+(parseInt(test3[0])+1)
-    else if(test3[1]==='6') result = "f"+(parseInt(test3[0])+1)
-    else if(test3[1]==='7') result = "g"+(parseInt(test3[0])+1)
-    else if(test3[1]==='8') result = "h"+(parseInt(test3[0])+1)
-    else if(test3[1]==='9') result = "i"+(parseInt(test3[0])+1)
-    else if(test3[1]==='0') result = "j"+(parseInt(test3[0])+1)
+    if(test3.length>1){
+        if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
+        else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
+        else if(test3[1]==='3') result = "c"+(parseInt(test3[0])+1)
+        else if(test3[1]==='4') result = "d"+(parseInt(test3[0])+1)
+        else if(test3[1]==='5') result = "e"+(parseInt(test3[0])+1)
+        else if(test3[1]==='6') result = "f"+(parseInt(test3[0])+1)
+        else if(test3[1]==='7') result = "g"+(parseInt(test3[0])+1)
+        else if(test3[1]==='8') result = "h"+(parseInt(test3[0])+1)
+        else if(test3[1]==='9') result = "i"+(parseInt(test3[0])+1)
+    } else result = "j"+(parseInt(test3[0]))
     return result
 }
+
+// console.log(convertTo(9))
+// console.log(convertTo(10))
+// console.log(convertTo(11))
+// console.log(convertTo(100))
