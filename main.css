@@ -4,7 +4,7 @@ body {
 
 div {
     display: flex;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin: 0 auto;
     /* justify-content: center; */
 }
@@ -19,7 +19,6 @@ div {
     width: 300px;
 }
 
-
 .square {
     display: flex;
     height: 50px;
@@ -33,24 +32,29 @@ div {
     flex-wrap: wrap;
 }
 
-
-
 button {
     height: 50px;
     width: 150px;
 }
+
 button:hover {
     background-color: lightblue;
 }
 
-
 /*-------------------------------------------------*/
+
+.display-text {
+    background-color: lightgray;
+    justify-content: center;
+    align-items: center;
+}
 
 .container {
     display: flex;
     padding: 0;
     margin: 0 auto;
 }
+
 .board {
     display: flex;
     flex-wrap: wrap;
@@ -62,10 +66,15 @@ button:hover {
     margin: 0 auto;
 }
 
-.horizontal-container {
-    height: 50px;
-    width: 602px;
-    background-color: lightgrey;
+.x-label{
+    height: 56px;
+    width: 610px;
+    margin: 0 auto;
+    justify-content: center;    
+    align-items: center;  
+    align-content: space-between;
+    text-align: center;
+    font-weight: bold;
 }
 
 .vertical-container {
@@ -73,6 +82,21 @@ button:hover {
     width: 50px;
     background-color: lightgrey;
     margin: 0;
+}
+
+.label {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    justify-content: center;    
+    align-items: center;
+    align-content: space-around;
+    border: 1px solid white;
+    border-radius: 1px;
+    /* height: 50px;
+    width: 50px; */
+    background-color: lightgray;
+    margin: 1px;
 }
 
 .player-board {
@@ -101,7 +125,6 @@ button:hover {
     margin: 1px;
 }
 
-
 .ctr-btn {
     justify-content: center;
     align-items: center;
@@ -124,6 +147,19 @@ button:hover {
 .green {
     background-color: green;
 }
+
 .yellow {
     background-color: yellow;
+}
+
+.lightgray {
+    background-color: lightgrey;
+}
+
+.gray {
+    background-color: grey;
+}
+
+.white {
+    background-color: white;
 }

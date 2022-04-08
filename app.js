@@ -1,15 +1,8 @@
 
 const div = document.querySelector('div')
 const board = document.querySelector('.testboard')
-// console.log(board);
-
+const gameText = document.querySelector('#game_text')
 const player1Board = document.querySelector('#player1')
-console.log(player1Board);
-
-// let square = document.createElement("div");
-// square.classList.add('square');
-// // console.log(square);
-// board.appendChild(square);
 
 // Game Width, Game Height
 let gameHeight = 10
@@ -18,12 +11,23 @@ let numSquares = gameWidth * gameHeight;
 
 // Creates grid - has help from css defining width and height
 for (let i=0; i<numSquares; i++){
-    let square = document.createElement("div")
+    let square = document.createElement("div");
     square.classList.add('square');
     // Give every new square a unique value
     square.setAttribute('value', i+1); 
     // board.appendChild(square);
     player1Board.appendChild(square);
+}
+
+let alphabet = ' abcdefghijklmnopqrstuvwxyz';
+let letter = alphabet.split('');
+// console.log(letter);
+const xLabel = document.querySelector('.x-label')
+for (let i=0; i<gameWidth+1; i++) {
+    let squareLabel = document.createElement("div");
+    squareLabel.classList.add('label');
+    squareLabel.innerHTML = `${letter[i]}`
+    xLabel.appendChild(squareLabel);
 }
 
 // Select all squares and store in variable 'squares'
@@ -36,10 +40,11 @@ testBtn1.addEventListener('click', (event) => {
     console.log(`testBtn1 - shipsArr:`);
     console.log(shipsArr)
 })
-// const testBtn2 = document.querySelector('#test_btn2')
-// testBtn2.addEventListener('click', (event) => {
-//     event.preventDefault();
-// })
+const testBtn2 = document.querySelector('#test_btn2')
+testBtn2.addEventListener('click', (event) => {
+    event.preventDefault();
+    compShot();
+})
 
 let gameCount = -1; // Something to indicate game status: begining, place first ship, ...
 let shipArr = [];
@@ -225,3 +230,56 @@ function findInShipsArr(value){
     return false;
 }
 
+// Function for random integer between 'min' and 'max'
+function randomBetween(min, max){
+    return Math.floor(Math.random() * (max-min) + min);
+}
+
+// // Computer calls shot out
+let computerShots = [];
+
+function compShot(){
+    let randomShot = randomBetween(0,100);
+    console.log(randomShot);
+    if(mainContainer.length>0){
+        if(computerShots.includes(randomShot)){
+            // gameText.innerHTML = `Computer's shot was called already!`;
+            randomShot = randomBetween(0,100)
+        }
+    
+        computerShots.push(randomShot)
+        squares.forEach(square => {
+            if(randomShot=== parseInt(square.getAttribute('value'))){
+                // square.classList.add('white')
+                if(mainContainer.includes(randomShot)){
+                    gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
+                    square.classList.add('gray')
+                } else {
+                    gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. Shot missed!`;
+                    square.classList.add('lightgray')
+                }
+            }
+        })
+    } else {
+        gameText.innerHTML = `Computer sank all your ships`;
+    }
+}
+
+function convertTo(value){
+    let divisionResult = (value)/10;
+    let convertResult = divisionResult.toString();
+    let test3 = convertResult.split('.')
+    console.log(test3);
+    let result = ''
+    if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
+    else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
+    else if(test3[1]==='3') result = "c"+(parseInt(test3[0])+1)
+    else if(test3[1]==='4') result = "d"+(parseInt(test3[0])+1)
+    else if(test3[1]==='5') result = "e"+(parseInt(test3[0])+1)
+    else if(test3[1]==='6') result = "f"+(parseInt(test3[0])+1)
+    else if(test3[1]==='7') result = "g"+(parseInt(test3[0])+1)
+    else if(test3[1]==='8') result = "h"+(parseInt(test3[0])+1)
+    else if(test3[1]==='9') result = "i"+(parseInt(test3[0])+1)
+    else if(test3[1]==='0') result = "j"+(parseInt(test3[0])+1)
+    return result
+}
