@@ -1,7 +1,6 @@
 class Player {
     constructor(){
         this.wins = 0
-        this.losses = 0
         this.ships = []
     }
     wins(){
@@ -15,12 +14,27 @@ class Player {
 class Ship {
     constructor(){
         this.length = 0
+        this.squaresHit = 0
         this.isSunk = false
+        this.isVertical = false
+        this.isHorizontal = false
         this.squares = []
     }
     addSquare(square){
         this.squares.push(square)
         this.length = this.squares.length
+    }
+    squareHit(){
+        this.squaresHit++;
+    }
+}
+
+class ShipSquare {
+    constructor(square,value){
+        this.value = value
+        this.boardValue = convertTo(value)
+        this.selector = square
+        this.isHit = false
     }
 }
 
@@ -70,9 +84,9 @@ const squares = document.querySelectorAll('.square')
 const testBtn1 = document.querySelector('#test_btn1')
 testBtn1.addEventListener('click', (event) => {
     event.preventDefault();
-    console.log(`testBtn1 - shipsArr:`);
+    console.log(`testBtn1 - shipsArr - Marc.ships:`);
     console.log(shipsArr)
-    console.log(Marc)
+    console.log(Marc.ships)
 })
 const testBtn2 = document.querySelector('#test_btn2')
 testBtn2.addEventListener('click', (event) => {
@@ -80,9 +94,12 @@ testBtn2.addEventListener('click', (event) => {
     compShot();
 })
 
-
+// Create a player object
 const Marc = new Player();
 console.log(Marc);
+// create a ship object
+let ship = new Ship()
+
 // Start button
 const startBtn = document.querySelector('#start_btn')
 startBtn.addEventListener('click', (event) => {
@@ -94,16 +111,14 @@ startBtn.addEventListener('click', (event) => {
 
 let activeGame = false; console.log(`activeGame: ${activeGame}`)
 let gameCount = -1; // Something to indicate game status: begining, place first ship, ...
-let squareElements = []
 
 let shipArr = [];
 let shipsArr = [];
 let mainContainer = [];
 let oldSquare = -1;
-let sL = [2,3,4]; //shipLength - currently fixed, could implement function so it can be variable in the future
+let sL = [2,3,3,4,5]; //shipLength - currently fixed, could implement function so it can be variable in the future
 // let sLL = [2,5,8,12,17] //add current and previous entries into current index, used for keeping up with gameCount
 
-// sL = [5,5,5]
 //sumWithPrevious - Function to allow variable ship lengths
 function sumWP(arr) {
     let oldArr = arr.slice();
@@ -130,7 +145,7 @@ function colorShip(i,sq){
     else sq.classList.add('red')
 }
 
-let ship = new Ship()
+
 squares.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
@@ -138,12 +153,11 @@ squares.forEach( square => {
         // Check if game started
         if(activeGame){
             // Get square's value
-            console.log(square)
-            console.log(square.value)
+            // console.log(square)
             
             
             let squareValue = parseInt(square.getAttribute('value'));
-            console.log(`squareValue: ${squareValue}`);
+            // console.log(`squareValue: ${squareValue}`);
             // console.log(`checkLegal: ${checkLegal(squareValue)}`)
             // console.log(`shipArr.length: ${shipArr.length}`)
             // console.log(shipArr)
@@ -152,32 +166,34 @@ squares.forEach( square => {
             for(let i=0; i<sLL.length; i++){
                 if ( gameCount < sLL[i] && checkLegal(squareValue) ){
                     gameCount++;
-                    ship.addSquare(square)
+                    let shipSquare = new ShipSquare(square,squareValue)
+
+                    // Add square to ship object
+                    ship.addSquare(shipSquare)
 
 
                     // console.log(`gameCount: ${gameCount}`);
                     oldSquare = squareValue;
                     shipArr.push(squareValue);
                     mainContainer.push(squareValue);
-                    console.log(`gameCount: ${gameCount} | shipArr.length: ${shipArr.length}`)
-                    console.log("shipArr: "); 
-                    console.log(shipArr);
+                    // console.log(`gameCount: ${gameCount} | shipArr.length: ${shipArr.length}`)
+                    // console.log("shipArr: "); 
+                    // console.log(shipArr);
                     colorShip(i,square);
                     // square.classList.add('red');
                     // console.log(square);
                     gameText.innerHTML = `Place your ship. (${sL[i]} squares)`
                     
                     
-                    
+                    // When all shipSquares have been placed, the ship is ready to be created and added to player's array
                     if(shipArr.length === sL[i]){
                         Marc.addShip(ship)
                         ship = new Ship()
                         shipsArr.push(shipArr)
                         shipArr = [];
                         oldSquare = -2;
-                        console.log(`oldSquare = ${oldSquare} | Pushed out finished ship, ready to record new ship`);
+                        // console.log(`oldSquare = ${oldSquare} | Pushed out finished ship, ready to record new ship`);
                         if(gameCount===sLL[sLL.length-1]){
-                            // Marc.ships.push(shipsArr)
                             gameText.innerHTML = "Press the Ready button"
                         } else {
                             gameText.innerHTML = `Place your next ship. (${sL[++i]} squares)`
@@ -203,75 +219,21 @@ function checkLegal(value){
     return false
 }
 
-// let arrtest1 = [2,7,12,17,22]
-// let arrtest2 = [16,17,18,19,20]
-// console.log(arrtest1.length)
-// let a = arrtest1.sort(function(a,b){return a-b})
-// console.log(a)
-
-// let testcount = 0
-// for(let i=arrtest1.length-1; i>0; i--){
-//     if( (arrtest1[i] - arrtest1[i-1]) === 5){
-//         testcount++;
-//         console.log(testcount)
-//     }
-//     if( testcount === arrtest1.length-1){
-//         return true;
-//     }
-//     console.log(testcount)
-//     console.log(`${i}: ${(arrtest1[i] - arrtest1[i-1])}`)
-// }
-
-
 
 // is squareVal = prevSquareVal - 10       (above)
 // is squareVal = prevSquareVal + 10       (below)
 // is squareVal = prevSquareVal + 1       (right)
 // is squareVal = prevSquareVal + 10       (down)
 function isAdjacent(value){
-    // let testcount1 = 0
-    // let testcount2
-    // let testArr = shipArr;
-    // testArr.push(value);
-    // testArr.sort((a,b)=>{return a-b})
-    // //Check Vertical
-    // for(let i=testArr.length-1; i>0; i--){
-    //     if( (testArr[i] - testArr[i-1]) === gameWidth){
-    //         testcount1++;
-    //         console.log(testcount1)
-    //         if( testcount1 === testArr.length-1){
-    //             return true;
-    //         }
-    //     }else if( (testArr[i] - testArr[i-1]) === 1){
-    //         testcount2++;
-    //         console.log(testcount2)
-    //         if( testcount2 === testArr.length-1){
-    //             return true;
-    //         }
-    //     }
-    //     console.log(testcount1)
-    //     console.log(`${i}: ${(testArr[i] - testArr[i-1])}`)
-    // }
-    // return false;
-
-    //     let valBelow = shipArr.includes(value) + gameHeight
-    //     let valRight = shipArr.includes(value) + 1
-    //     let valLeft = shipArr.includes(value) - 1
-    // If first pick for new ship, no previous adjacent square
-    if(oldSquare === (-1) && shipsArr.length===0) {
+    if(oldSquare === (-1)) {
         return true;
     } else if((oldSquare === (-2) )){
-        // console.log("check if in overall Ships array")
-        // console.log(gameCount)
-        // console.log(findInShipsArr(value))
         if(mainContainer.includes(value)){
             return false;
         } else {
             return true;
         }
-        
     }
-
     // new on the bottom, new on the top
     // new on the right, new on the left
     if( ((value - oldSquare) === gameWidth) || ((oldSquare - value) === gameWidth) ||
@@ -291,18 +253,6 @@ function hasNotBeenPickedAlready(value) {
         return false;
     }
     return true;
-}
-
-function findInShipsArr(value){
-    shipsArr.forEach( ship => {
-        if(ship.includes(value)){
-            console.log(`Found square in shipsArr`);
-            console.log(shipsArr)
-            // found a square that has been used already
-            return true;
-        } 
-    })
-    return false;
 }
 
 // Function for random integer between 'min' and 'max'
@@ -325,7 +275,6 @@ function compShot(){
         computerShots.push(randomShot)
         squares.forEach(square => {
             if(randomShot=== parseInt(square.getAttribute('value'))){
-                // square.classList.add('white')
                 if(mainContainer.includes(randomShot)){
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
                     square.classList.add('gray')
@@ -344,7 +293,7 @@ function convertTo(value){
     let divisionResult = (value)/10;
     let convertResult = divisionResult.toString();
     let test3 = convertResult.split('.')
-    console.log(test3);
+    // console.log(test3);
     let result = ''
     if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
     else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
