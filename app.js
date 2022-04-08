@@ -1,3 +1,31 @@
+class Player {
+    constructor(){
+        this.wins = 0
+        this.losses = 0
+        this.ships = []
+    }
+    wins(){
+        this.wins++
+    }
+    addShip(ship){
+        this.ships.push(ship)
+    }
+}
+
+class Ship {
+    constructor(){
+        this.length = 0
+        this.isSunk = false
+        this.squares = []
+    }
+    addSquare(square){
+        this.squares.push(square)
+        this.length = this.squares.length
+    }
+}
+
+
+
 
 const div = document.querySelector('div')
 const board = document.getElementsByClassName('.board')
@@ -44,6 +72,7 @@ testBtn1.addEventListener('click', (event) => {
     event.preventDefault();
     console.log(`testBtn1 - shipsArr:`);
     console.log(shipsArr)
+    console.log(Marc)
 })
 const testBtn2 = document.querySelector('#test_btn2')
 testBtn2.addEventListener('click', (event) => {
@@ -51,13 +80,27 @@ testBtn2.addEventListener('click', (event) => {
     compShot();
 })
 
+
+const Marc = new Player();
+console.log(Marc);
+// Start button
+const startBtn = document.querySelector('#start_btn')
+startBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    activeGame = true;
+    console.log(`activeGame: ${activeGame}`);
+    gameText.innerHTML = "Pick a square."
+})
+
 let activeGame = false; console.log(`activeGame: ${activeGame}`)
 let gameCount = -1; // Something to indicate game status: begining, place first ship, ...
+let squareElements = []
+
 let shipArr = [];
 let shipsArr = [];
 let mainContainer = [];
 let oldSquare = -1;
-let sL = [2,3,3,4,5]; //shipLength - currently fixed, could implement function so it can be variable in the future
+let sL = [2,3,4]; //shipLength - currently fixed, could implement function so it can be variable in the future
 // let sLL = [2,5,8,12,17] //add current and previous entries into current index, used for keeping up with gameCount
 
 // sL = [5,5,5]
@@ -84,8 +127,10 @@ function colorShip(i,sq){
     else if(i===2) sq.classList.add('green')
     else if(i===3) sq.classList.add('yellow')
     else if(i===4) sq.classList.add('orange')
+    else sq.classList.add('red')
 }
 
+let ship = new Ship()
 squares.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
@@ -94,16 +139,22 @@ squares.forEach( square => {
         if(activeGame){
             // Get square's value
             console.log(square)
+            console.log(square.value)
+            
             
             let squareValue = parseInt(square.getAttribute('value'));
             console.log(`squareValue: ${squareValue}`);
             // console.log(`checkLegal: ${checkLegal(squareValue)}`)
             // console.log(`shipArr.length: ${shipArr.length}`)
             // console.log(shipArr)
+            
     
             for(let i=0; i<sLL.length; i++){
                 if ( gameCount < sLL[i] && checkLegal(squareValue) ){
                     gameCount++;
+                    ship.addSquare(square)
+
+
                     // console.log(`gameCount: ${gameCount}`);
                     oldSquare = squareValue;
                     shipArr.push(squareValue);
@@ -114,12 +165,23 @@ squares.forEach( square => {
                     colorShip(i,square);
                     // square.classList.add('red');
                     // console.log(square);
+                    gameText.innerHTML = `Place your ship. (${sL[i]} squares)`
+                    
+                    
+                    
                     if(shipArr.length === sL[i]){
-                        shipsArr.push(shipArr);
+                        Marc.addShip(ship)
+                        ship = new Ship()
+                        shipsArr.push(shipArr)
                         shipArr = [];
                         oldSquare = -2;
                         console.log(`oldSquare = ${oldSquare} | Pushed out finished ship, ready to record new ship`);
-                        gameText.innerHTML = `Place your next ship. (${sL[++i]} squares)`
+                        if(gameCount===sLL[sLL.length-1]){
+                            // Marc.ships.push(shipsArr)
+                            gameText.innerHTML = "Press the Ready button"
+                        } else {
+                            gameText.innerHTML = `Place your next ship. (${sL[++i]} squares)`
+                        }
                     }
                 }
             }
@@ -127,14 +189,7 @@ squares.forEach( square => {
     })
 })
 
-// Start button
-const startBtn = document.querySelector('#start_btn')
-startBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    activeGame = true;
-    console.log(`activeGame: ${activeGame}`);
-    gameText.innerHTML = "Pick squares to place ships."
-})
+
 
 function checkLegal(value){
     // if(gameCount = 0 && shipArr.length === 0) return false
