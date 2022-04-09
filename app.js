@@ -1,3 +1,4 @@
+// Player Class
 class Player {
     constructor(){
         this.wins = 0
@@ -25,6 +26,7 @@ class Player {
     }
 }
 
+// Ship Class
 class Ship {
     constructor(){
         this.length = 0
@@ -62,6 +64,7 @@ class Ship {
     }
 }
 
+// ShipSquare Class
 class ShipSquare {
     constructor(square,value){
         this.value = value
@@ -74,11 +77,12 @@ class ShipSquare {
 }
 
 
-
+// DOM Selectors
 const div = document.querySelector('div')
 const board = document.getElementsByClassName('.board')
 const gameText = document.querySelector('#game_text')
 const player1Board = document.querySelector('#player1')
+
 
 // Game Width, Game Height
 let gameHeight = 10
@@ -95,10 +99,11 @@ for (let i=0; i<numSquares; i++){
     square.innerHTML = `${square.getAttribute('value')}`
     player1Board.appendChild(square);
 }
+const squares = document.querySelectorAll('.square')
 
+// Create x & y label squares
 let alphabet = 'abcdefghijklmnopqrstuvwxyz';
 let letter = alphabet.split('');
-// console.log(letter);
 const xLabel = document.querySelector('.x-label')
 const yLabel = document.querySelector('.y-label')
 for (let i=0; i<gameWidth; i++) {
@@ -112,10 +117,7 @@ for (let i=0; i<gameWidth; i++) {
     yLabel.appendChild(ysquareLabel);
 }
 
-// Select all squares and store in variable 'squares'
-const squares = document.querySelectorAll('.square')
-// console.log(squares);
-
+// Text Buttons
 const testBtn1 = document.querySelector('#test_btn1')
 testBtn1.addEventListener('click', (event) => {
     event.preventDefault();
@@ -132,7 +134,7 @@ testBtn2.addEventListener('click', (event) => {
 // Create a player object
 const Marc = new Player();
 console.log(Marc);
-// create a ship object
+// Create a ship object
 let ship = new Ship()
 
 // Start button
@@ -144,9 +146,9 @@ startBtn.addEventListener('click', (event) => {
     gameText.innerHTML = "Pick a square."
 })
 
+// Initialize Global Variables
 let activeGame = false; console.log(`activeGame: ${activeGame}`)
 let gameCount = -1; // Something to indicate game status: begining, place first ship, ...
-
 let shipArr = [];
 let shipsArr = [];
 let mainContainer = [];
@@ -180,7 +182,7 @@ function colorShip(i,sq){
     else sq.classList.add('red')
 }
 
-
+// For each square event listener
 squares.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
@@ -243,7 +245,7 @@ squares.forEach( square => {
 })
 
 
-
+// Function to check if square selected is "legal"
 function checkLegal(value){
     // if(gameCount = 0 && shipArr.length === 0) return false
     let check1 = hasNotBeenPickedAlready(value)
@@ -297,12 +299,13 @@ function randomBetween(min, max){
     return Math.floor(Math.random() * (max-min) + min);
 }
 
-// // Computer calls shot out
+// Computer calls shot out
 let computerShots = [];
 let compNextShot = ''
 
+// Computer calls a shot
 function compShot(){
-    let randomShot = randomBetween(0,100);
+    let randomShot = randomBetween(0,99);
     console.log(randomShot);
     if(mainContainer.length>0){
         if(computerShots.includes(randomShot)){
@@ -328,6 +331,7 @@ function compShot(){
     }
 }
 
+// Convert square's value to Board Value
 function convertTo(value){
     let temp = (value/10 + 1).toFixed(1)
     // temp = temp.toFixed(1)
@@ -343,24 +347,4 @@ function convertTo(value){
     else if(temp1[1]==="8") temp1[1]="i"
     else if(temp1[1]==="9") temp1[1]="j"
     return temp1[1].concat(temp1[0])
-
-
-
-    // let divisionResult = (value)/10;
-    // let convertResult = divisionResult.toString();
-    // let test3 = convertResult.split('.')
-    // // console.log(test3);
-    // let result = ''
-    // if(test3.length>1){
-    //     if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='3') result = "c"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='4') result = "d"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='5') result = "e"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='6') result = "f"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='7') result = "g"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='8') result = "h"+(parseInt(test3[0])+1)
-    //     else if(test3[1]==='9') result = "i"+(parseInt(test3[0])+1)
-    // } else result = "j"+(parseInt(test3[0]))
-    // return result
 }

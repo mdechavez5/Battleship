@@ -27,11 +27,6 @@ div {
     margin: 0;
 }
 
-.board {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 button {
     height: 50px;
     width: 150px;
@@ -67,14 +62,13 @@ button:hover {
 }
 
 .corner-label {
-    background-color:  lightblue;
+    background-color:  white;
     width: 50px;
     height: 50px;
+    margin: 0;
 }
 
 .x-label{
-    /* display: flex;
-    flex-direction: row; */
     height: 56px;
     width: 610px;
     margin: 0 auto;
@@ -83,13 +77,18 @@ button:hover {
     align-content: space-between;
     text-align: center;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .y-label {
     display: flex;
     flex-direction: column;
+    justify-content: center;    
+    align-items: center;  
+    align-content: space-between;
     height: 550px;
     width: 50px;
+    font-weight: bold;
     margin: 0;
 }
 
@@ -102,8 +101,6 @@ button:hover {
     align-content: space-around;
     border: 1px solid white;
     border-radius: 1px;
-    /* height: 50px;
-    width: 50px; */
     background-color: lightgray;
     margin: 1px;
 }
@@ -116,8 +113,6 @@ button:hover {
     align-content: center;
     height: 550px;
     width: 550px;
-    /* height: 540px;
-    width: 540px; */
     padding: 0;
     margin: 0;
 }
@@ -128,8 +123,9 @@ button:hover {
     width: 50px;
     border: 1px solid white;
     border-radius: 1px;
-    /* height: 50px;
-    width: 50px; */
+    justify-content: center;
+    align-items: center;
+    font-size: 0.1em;
     background-color: rgb(175, 225, 242);
     margin: 1px;
 }
