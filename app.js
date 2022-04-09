@@ -28,7 +28,6 @@ class Player {
 class Ship {
     constructor(){
         this.length = 0
-        this.squaresHit = 0
         this.isSunk = false
         this.isVertical = false
         this.isHorizontal = false
@@ -58,6 +57,7 @@ class Ship {
         })
         if(i === this.length){
             this.isSunk = true
+            gameText.innerHTML = "Ship sunk!"
         }
     }
 }
@@ -65,12 +65,13 @@ class Ship {
 class ShipSquare {
     constructor(square,value){
         this.value = value
+        this.bv_x = convertVtoBV(value)[1]
+        this.bv_y = convertVtoBV(value)[0]
         this.boardValue = convertTo(value)
-        this.selector = square
         this.isHit = false
+        this.selector = square
     }
 }
-
 
 
 
@@ -89,8 +90,9 @@ for (let i=0; i<numSquares; i++){
     let square = document.createElement("div");
     square.classList.add('square');
     // Give every new square a unique value
-    square.setAttribute('value', i+1); 
+    square.setAttribute('value', (i) ); 
     // board.appendChild(square);
+    square.innerHTML = `${square.getAttribute('value')}`
     player1Board.appendChild(square);
 }
 
@@ -118,7 +120,7 @@ const testBtn1 = document.querySelector('#test_btn1')
 testBtn1.addEventListener('click', (event) => {
     event.preventDefault();
     console.log(`testBtn1 - shipsArr - Marc.ships:`);
-    console.log(shipsArr)
+    // console.log(shipsArr)
     console.log(Marc.ships)
 })
 const testBtn2 = document.querySelector('#test_btn2')
@@ -297,6 +299,7 @@ function randomBetween(min, max){
 
 // // Computer calls shot out
 let computerShots = [];
+let compNextShot = ''
 
 function compShot(){
     let randomShot = randomBetween(0,100);
@@ -312,6 +315,7 @@ function compShot(){
             if(randomShot=== parseInt(square.getAttribute('value'))){
                 if(mainContainer.includes(randomShot)){
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
+                    Marc.shipHit(convertTo(randomShot))
                     square.classList.add('gray')
                 } else {
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. Shot missed!`;
@@ -348,3 +352,16 @@ function convertTo(value){
 // console.log(convertTo(10))
 // console.log(convertTo(11))
 // console.log(convertTo(100))
+
+function convertVtoBV(value){
+    let temp = (value/10).toFixed(1)
+    // temp = temp.toFixed(1)
+    return temp.split('.')
+}
+
+console.log(convertVtoBV(0))
+console.log(convertVtoBV(1))
+console.log(convertVtoBV(10))
+console.log(convertVtoBV(26))
+console.log(convertVtoBV(99))
+console.log(convertVtoBV(100))
