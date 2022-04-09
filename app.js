@@ -76,13 +76,11 @@ class ShipSquare {
     }
 }
 
-
 // DOM Selectors
 const div = document.querySelector('div')
 const board = document.getElementsByClassName('.board')
 const gameText = document.querySelector('#game_text')
 const player1Board = document.querySelector('#player1')
-
 
 // Game Width, Game Height
 let gameHeight = 10
@@ -116,6 +114,35 @@ for (let i=0; i<gameWidth; i++) {
     ysquareLabel.innerHTML = `${(i+1)}`
     yLabel.appendChild(ysquareLabel);
 }
+
+// PLAYER 2 BOARD -----------------------------------
+const player2Board = document.querySelector('#player2')
+// Creates grid - has help from css defining width and height
+for (let i=0; i<numSquares; i++){
+    let square = document.createElement("div");
+    square.classList.add('square');
+    // Give every new square a unique value
+    square.setAttribute('value', i ); 
+    // board.appendChild(square);
+    square.innerHTML = `${square.getAttribute('value')}`
+    player2Board.appendChild(square);
+}
+const squares2 = document.querySelectorAll('.square2')
+
+// Create x & y label squares
+const xLabel2 = document.querySelector('.x-label2')
+const yLabel2 = document.querySelector('.y-label2')
+for (let i=0; i<gameWidth; i++) {
+    let xsquareLabel = document.createElement("div");
+    xsquareLabel.classList.add('label');
+    xsquareLabel.innerHTML = `${letter[i]}`
+    xLabel2.appendChild(xsquareLabel);
+    let ysquareLabel = document.createElement("div");
+    ysquareLabel.classList.add('label')
+    ysquareLabel.innerHTML = `${(i+1)}`
+    yLabel2.appendChild(ysquareLabel);
+}
+// --------------------------------------------------
 
 // Text Buttons
 const testBtn1 = document.querySelector('#test_btn1')
@@ -257,7 +284,6 @@ function checkLegal(value){
     } 
     return false
 }
-
 
 // is squareVal = prevSquareVal - 10       (above)
 // is squareVal = prevSquareVal + 10       (below)
