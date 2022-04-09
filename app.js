@@ -9,6 +9,20 @@ class Player {
     addShip(ship){
         this.ships.push(ship)
     }
+    shipHit(bValue){
+        // Go through all of this player's ships
+        this.ships.forEach( ship => {
+            // Go through all of the ship's squares
+            ship.squares.forEach( square => {
+                // If that square contains the boardValue
+                if(bValue === square.boardValue){
+                    // Update square's isHit property
+                    square.isHit = true;
+                    ship.checkSunk();
+                }
+            })
+        })
+    }
 }
 
 class Ship {
@@ -34,6 +48,17 @@ class Ship {
        }else {
            this.isVertical = true;
        }
+    }
+    checkSunk(){
+        let i = 0
+        this.squares.forEach( square => {
+            if(square.isHit === true){
+                i++;
+            }
+        })
+        if(i === this.length){
+            this.isSunk = true
+        }
     }
 }
 
@@ -172,6 +197,7 @@ squares.forEach( square => {
             
     
             for(let i=0; i<sLL.length; i++){
+                // Only allows legal ship squares to be recorded
                 if ( gameCount < sLL[i] && checkLegal(squareValue) ){
                     gameCount++;
                     let shipSquare = new ShipSquare(square,squareValue)
