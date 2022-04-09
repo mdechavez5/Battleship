@@ -65,9 +65,9 @@ class Ship {
 class ShipSquare {
     constructor(square,value){
         this.value = value
-        this.bv_x = convertVtoBV(value)[1]
-        this.bv_y = convertVtoBV(value)[0]
         this.boardValue = convertTo(value)
+        // this.bv_x = convertVtoBV(value)[1]
+        // this.bv_y = convertVtoBV(value)[0]
         this.isHit = false
         this.selector = square
     }
@@ -90,7 +90,7 @@ for (let i=0; i<numSquares; i++){
     let square = document.createElement("div");
     square.classList.add('square');
     // Give every new square a unique value
-    square.setAttribute('value', (i) ); 
+    square.setAttribute('value', i ); 
     // board.appendChild(square);
     square.innerHTML = `${square.getAttribute('value')}`
     player1Board.appendChild(square);
@@ -329,39 +329,38 @@ function compShot(){
 }
 
 function convertTo(value){
-    let divisionResult = (value)/10;
-    let convertResult = divisionResult.toString();
-    let test3 = convertResult.split('.')
-    // console.log(test3);
-    let result = ''
-    if(test3.length>1){
-        if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
-        else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
-        else if(test3[1]==='3') result = "c"+(parseInt(test3[0])+1)
-        else if(test3[1]==='4') result = "d"+(parseInt(test3[0])+1)
-        else if(test3[1]==='5') result = "e"+(parseInt(test3[0])+1)
-        else if(test3[1]==='6') result = "f"+(parseInt(test3[0])+1)
-        else if(test3[1]==='7') result = "g"+(parseInt(test3[0])+1)
-        else if(test3[1]==='8') result = "h"+(parseInt(test3[0])+1)
-        else if(test3[1]==='9') result = "i"+(parseInt(test3[0])+1)
-    } else result = "j"+(parseInt(test3[0]))
-    return result
-}
-
-// console.log(convertTo(9))
-// console.log(convertTo(10))
-// console.log(convertTo(11))
-// console.log(convertTo(100))
-
-function convertVtoBV(value){
-    let temp = (value/10).toFixed(1)
+    let temp = (value/10 + 1).toFixed(1)
     // temp = temp.toFixed(1)
-    return temp.split('.')
-}
+    let temp1 = temp.split('.')
+    if(temp1[1]==="0") temp1[1]="a"
+    else if(temp1[1]==="1") temp1[1]="b"
+    else if(temp1[1]==="2") temp1[1]="c"
+    else if(temp1[1]==="3") temp1[1]="d"
+    else if(temp1[1]==="4") temp1[1]="e"
+    else if(temp1[1]==="5") temp1[1]="f"
+    else if(temp1[1]==="6") temp1[1]="g"
+    else if(temp1[1]==="7") temp1[1]="h"
+    else if(temp1[1]==="8") temp1[1]="i"
+    else if(temp1[1]==="9") temp1[1]="j"
+    return temp1[1].concat(temp1[0])
 
-console.log(convertVtoBV(0))
-console.log(convertVtoBV(1))
-console.log(convertVtoBV(10))
-console.log(convertVtoBV(26))
-console.log(convertVtoBV(99))
-console.log(convertVtoBV(100))
+
+
+    // let divisionResult = (value)/10;
+    // let convertResult = divisionResult.toString();
+    // let test3 = convertResult.split('.')
+    // // console.log(test3);
+    // let result = ''
+    // if(test3.length>1){
+    //     if(test3[1]==='1') result = "a"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='2') result = "b"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='3') result = "c"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='4') result = "d"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='5') result = "e"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='6') result = "f"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='7') result = "g"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='8') result = "h"+(parseInt(test3[0])+1)
+    //     else if(test3[1]==='9') result = "i"+(parseInt(test3[0])+1)
+    // } else result = "j"+(parseInt(test3[0]))
+    // return result
+}
