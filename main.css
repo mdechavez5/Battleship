@@ -61,6 +61,10 @@ button:hover {
     margin: 0 auto;
 }
 
+#board2 {
+    display: none;
+}
+
 .corner-label {
     background-color:  white;
     width: 50px;

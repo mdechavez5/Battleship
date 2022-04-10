@@ -173,6 +173,14 @@ startBtn.addEventListener('click', (event) => {
     gameText.innerHTML = "Pick a square."
 })
 
+// Ready button
+const board2 = document.getElementById('board2')
+const readyBtn = document.querySelector('#ready_btn')
+readyBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    board2.style.display = "flex"
+})
+
 // Initialize Global Variables
 let activeGame = false; console.log(`activeGame: ${activeGame}`)
 let gameCount = -1; // Something to indicate game status: begining, place first ship, ...
