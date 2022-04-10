@@ -86,13 +86,14 @@ let numSquares = gameWidth * gameHeight;
 for (let i=0; i<numSquares; i++){
     let square = document.createElement("div");
     square.classList.add('square');
+    square.setAttribute('id','square1');
     // Give every new square a unique value
     square.setAttribute('value', i ); 
     // board.appendChild(square);
     square.innerHTML = `${square.getAttribute('value')}`
     player1Board.appendChild(square);
 }
-const squares = document.querySelectorAll('.square')
+const squares1 = document.querySelectorAll('.square')
 
 // Create x & y label squares
 let alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -217,7 +218,7 @@ function colorShip(i,sq){
 }
 
 // For each square event listener
-squares.forEach( square => {
+squares1.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
 
@@ -232,7 +233,7 @@ squares.forEach( square => {
             // console.log(`checkLegal: ${checkLegal(squareValue)}`)
             // console.log(`shipArr.length: ${shipArr.length}`)
             // console.log(shipArr)
-            console.log(`oldSquare = ${oldSquare}`)
+            // console.log(`oldSquare = ${oldSquare}`)
     
             for(let i=0; i<sLL.length; i++){
                 // Only allows legal ship squares to be recorded
@@ -347,11 +348,10 @@ function hasNotBeenPickedAlready(value) {
     return true;
 }
 
+// Check if old square was on border, wont allow square selection across the board
 function onBorder(value){
     let temp = (oldSquare/10).toFixed(1)
     let temp2 = temp.toString().split('.')
-    console.log(temp);
-    console.log(temp2)
     if(temp2.indexOf('9') === 1){
         if(value-oldSquare === 1){
             return false;
@@ -402,12 +402,12 @@ function compShot(){
         // if(compNextShot !== (-1)){
         //      randomShot = compAvailShots.splice(compAvailShots.indexOf(randomShot), 1)[0];
         // }
-        console.log(randomShot);
+        // console.log(randomShot);
 
         computerShots.push(randomShot)
         compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 ); 
         // console.log(compAvailShots)
-        squares.forEach(square => {
+        squares1.forEach(square => {
             if(randomShot=== parseInt(square.getAttribute('value'))){
                 if(mainContainer.includes(randomShot)){
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
@@ -431,7 +431,6 @@ function compShot(){
 // Convert square's value to Board Value
 function convertTo(value){
     let temp = (value/10 + 1).toFixed(1)
-    // temp = temp.toFixed(1)
     let temp1 = temp.split('.')
     if(temp1[1]==="0") temp1[1]="a"
     else if(temp1[1]==="1") temp1[1]="b"
