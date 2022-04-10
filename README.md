@@ -18,16 +18,13 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 1. Setup grid layout (Start small: 5x5)
 2. Ability to select a square
 3. Create a Ship object to record ship properties
-4. Record selected squares into Ship object
-Ability to select a number of squares equal to one ship's length
-Prevent ability to select more squares than necessary
-Prevent ability to select non-legal squares
-Record the selected squares
-Scale up. Now do steps 2-5 with two ships
-Add a function that simulates a computer calling a shot
-Display if one of Player's ships has been hit
-Display if a shot missed or hit
-Display if a whole ship has been hit - ship has sunk
+4. Ability to select a number of squares equal to one ship's length
+5. Record selected squares into Ship object
+6. Scale up. Now do steps 2-5 with two ships
+7. Add a function that simulates a computer calling a shot
+8. Display if one of Player's ships has been hit
+9. Display if a shot missed
+10. Display if the rest of a ship has been hit - ship has sunk
 
 ## Wireframe
 ![Initial Framing](https://user-images.githubusercontent.com/101363667/162599006-203e84f3-87ff-46f1-aceb-65c25cbf5eaf.png)
