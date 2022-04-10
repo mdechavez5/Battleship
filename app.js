@@ -60,6 +60,7 @@ class Ship {
         if(i === this.length){
             this.isSunk = true
             gameText.innerHTML = "Ship sunk!"
+            console.log("Ship sunk!");
         }
     }
 }
@@ -335,28 +336,72 @@ function randomBetween(min, max){
 
 // Computer calls shot out
 let computerShots = [];
-let compNextShot = ''
+let compPrevShot = -1
+let compNextShot = -1
+
+
+function make99() {
+    let arr = [];
+    for(let i=0; i<100; i++){
+        arr.push(i);
+    }
+    return arr;
+}
+let compAvailShots = make99();
+
+// console.log(compAvailShots);    // Prints Arr
+// console.log(compAvailShots.length);
+// let randomShot = compAvailShots[randomBetween(0,compAvailShots.length-1)];  // Returns random number from Arr
+// console.log(randomShot);
+// let rand = compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 );  // Removes number from Arr
+// console.log(rand);
+// console.log(compAvailShots);
 
 // Computer calls a shot
 function compShot(){
-    let randomShot = randomBetween(0,99);
+    let randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
+
     console.log(randomShot);
     if(mainContainer.length>0){
         if(computerShots.includes(randomShot)){
             // gameText.innerHTML = `Computer's shot was called already!`;
-            randomShot = randomBetween(0,100)
+            randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
         }
-    
+        if(compNextShot !== (-1)){
+            randomShot = compNextShot;
+        }
         computerShots.push(randomShot)
+        compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 ); 
         squares.forEach(square => {
             if(randomShot=== parseInt(square.getAttribute('value'))){
                 if(mainContainer.includes(randomShot)){
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
                     Marc.shipHit(convertTo(randomShot))
                     square.classList.add('gray')
+                    
+
+                    if ( computerShots.includes( randomShot + 1 ) === false){
+                        compNextShot = randomShot + 1;
+                        compPrevShot = randomShot;
+                    } else if ( computerShots.includes( randomShot - 10 ) === false){
+                        compNextShot = randomShot + 1;
+                        compPrevShot = randomShot;
+                    } else if ( computerShots.includes( randomShot - 1 ) === false){
+                        compNextShot = randomShot - 1;
+                        compPrevShot = randomShot;
+                    } else if ( computerShots.includes( randomShot - 10 ) === false){
+                        compNextShot = randomShot - 10;
+                        compPrevShot = randomShot;
+                    } else {
+                        compNextShot = -1;
+                    }
+                    console.log(`compPrevShot: ${compPrevShot}`);
+                    console.log(`compNextShot: ${compNextShot}`);
+
                 } else {
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. Shot missed!`;
                     square.classList.add('lightgray')
+                    compNextShot = -1;
                 }
             }
         })
