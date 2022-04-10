@@ -6,29 +6,30 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 [Battleship Repository](https://github.com/mdechavez5/Battleship)
 
 ## Basic User Stories
-1. As a user, you have the option to start game, choose vs-Player or vs-Computer. Chose vs-Computer.
-2. Player is prompted to mark squares on the board. Marked squares are locations for their ships.
-3. After ships are placed, Player can hit the ready button.
-4. Player's board is deactivated for anymore inputs. (Can't move pieces after game starts)
-5. The game starts by randomly choosing who gets to call a shot out first.
-6. Player's turn to call out shot, the opponent's board is activated to let Player mark a square.
-7. It hit a ship! The square is marked red. || It missed! The square is marked gray.
-8. Player's turn is over.
-9. Computer's turn to call out a shot. Computer chooses a square.
-10. It hit a ship! The square is marked red. || It missed! The square is marked gray.
-11. Player's turn again.
-12. Continues until a ship has been fully hit. 
-13. Player sank one of Computer's ship!
-14. Alternate turns until someone loses all 5 of their ships.
-15. Player sank all of Computer's ships! Player wins!
-
-## MVP Tasks
 1. As user, I want to be able to Start Game.
 2. As user, I want to select the squares to place my ships.
 3. As user, I press the Ready Button after placing my ships.
 4. As user, I can select the square on the opponent's grid to call a shot on.
+5. As user, I want to always see my board.
+6. As user, I need to know the result of my shot. ( Hit / Miss )
+7. As user, I need to know if a ship has sunk.
+
+## MVP Tasks
+1. Setup grid layout (Start small: 5x5)
+2. Ability to select a square
+3. Create a Ship object to record ship properties (length, squares, isSunk, etc.)
+4. Ability to select a number of squares equal to one ship's length
+5. Record selected squares into Ship object
+6. Scale up. Be able to select and create more ships
+7. Add a function that simulates a computer calling a shot
+8. Display if one of Player's ships has been hit
+9. Display if a shot missed
+10. Display if the rest of a ship has been hit - ship has sunk
 
 ## Wireframe
+![Initial Framing](https://user-images.githubusercontent.com/101363667/162599006-203e84f3-87ff-46f1-aceb-65c25cbf5eaf.png)
+![ship objects](https://user-images.githubusercontent.com/101363667/162599008-c96eb15d-11c9-471b-9afa-cddbb2815efc.png)
+
 ![Wireframe5](https://user-images.githubusercontent.com/101363667/162039194-ed1ab30e-7bfa-4a37-b2e4-98538ac1f791.png)
 
 ## Pseudo Code
