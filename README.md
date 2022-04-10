@@ -17,10 +17,10 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 ## MVP Tasks
 1. Setup grid layout (Start small: 5x5)
 2. Ability to select a square
-3. Create a Ship object to record ship properties
+3. Create a Ship object to record ship properties (length, squares, isSunk, etc.)
 4. Ability to select a number of squares equal to one ship's length
 5. Record selected squares into Ship object
-6. Scale up. Now do steps 2-5 with two ships
+6. Scale up. Be able to select and create more ships
 7. Add a function that simulates a computer calling a shot
 8. Display if one of Player's ships has been hit
 9. Display if a shot missed
