@@ -6,7 +6,6 @@ div {
     display: flex;
     /* border: 1px solid red; */
     margin: 0 auto;
-    /* justify-content: center; */
 }
 
 .testboard {
@@ -19,13 +18,6 @@ div {
     width: 300px;
 }
 
-.square {
-    display: flex;
-    height: 50px;
-    width: 50px;
-    background-color: lightgray;
-    margin: 0;
-}
 
 button {
     height: 50px;
@@ -158,10 +150,16 @@ button:hover {
 }
 
 .ctr-btn {
+    border: 1px solid white;
+    border-radius: 25px;
     justify-content: center;
     align-items: center;
     align-content: space-between;
     margin: 0 auto;
+}
+
+#ready_btn {
+    display: none;
 }
 
 .red {

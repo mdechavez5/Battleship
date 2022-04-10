@@ -156,7 +156,8 @@ testBtn2.addEventListener('click', (event) => {
 
 // Create a player object
 const Marc = new Player();
-console.log(Marc);
+// console.log(Marc);
+
 // Create a ship object
 let ship = new Ship()
 
@@ -176,6 +177,7 @@ readyBtn.addEventListener('click', (event) => {
     event.preventDefault();
     board2.style.display = "flex"
     gameText.innerHTML = "Pick a square on the Computer's board."
+    readyBtn.style.display = 'none';
 })
 
 // Initialize Global Variables
@@ -230,7 +232,7 @@ squares.forEach( square => {
             // console.log(`checkLegal: ${checkLegal(squareValue)}`)
             // console.log(`shipArr.length: ${shipArr.length}`)
             // console.log(shipArr)
-            
+            console.log(`oldSquare = ${oldSquare}`)
     
             for(let i=0; i<sLL.length; i++){
                 // Only allows legal ship squares to be recorded
@@ -264,6 +266,8 @@ squares.forEach( square => {
                         // console.log(`oldSquare = ${oldSquare} | Pushed out finished ship, ready to record new ship`);
                         if(gameCount===sLL[sLL.length-1]){
                             gameText.innerHTML = "Press the Ready button"
+                            readyBtn.style.display = 'block'
+                            startBtn.style.display = 'none'
                         } else {
                             gameText.innerHTML = `Place your next ship. (${sL[++i]} squares)`
                         }
@@ -280,6 +284,7 @@ console.log(compShips)
 squares2.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault()
+
         
         if (activeGame){
             let squareValue = parseInt(square.getAttribute('value'));
@@ -298,9 +303,10 @@ squares2.forEach( square => {
 function checkLegal(value){
     let check1 = hasNotBeenPickedAlready(value)
     let check2 = isAdjacent(value)
+    let check3 = onBorder(value)
     // console.log(`check1: ${check1}`);
     // console.log(`check2: ${check2}`);
-    if( check1 && check2 ){
+    if( check1 && check2 && check3 ){
         return true
     } 
     return false
@@ -337,6 +343,24 @@ function hasNotBeenPickedAlready(value) {
         return true;
     } else if (oldSquare === value || mainContainer.includes(value)){
         return false;
+    }
+    return true;
+}
+
+function onBorder(value){
+    let temp = (oldSquare/10).toFixed(1)
+    let temp2 = temp.toString().split('.')
+    console.log(temp);
+    console.log(temp2)
+    if(temp2.indexOf('9') === 1){
+        if(value-oldSquare === 1){
+            return false;
+        }
+    }
+    else if(temp2.indexOf('0') === 1 ){
+        if(oldSquare-value === 1){
+            return false
+        }
     }
     return true;
 }
@@ -420,4 +444,8 @@ function convertTo(value){
     else if(temp1[1]==="8") temp1[1]="i"
     else if(temp1[1]==="9") temp1[1]="j"
     return temp1[1].concat(temp1[0])
+    // Returns string (i.e. 'e5' from an intial value of 44)
 }
+// let temp = convertTo(44)
+// console.log(typeof temp)
+// console.log(temp.split(''))
