@@ -31,23 +31,19 @@ class Ship {
     constructor(){
         this.length = 0
         this.isSunk = false
-        this.isVertical = false
-        this.isHorizontal = false
+        this.orientation
         this.squares = []
     }
     addSquare(square){
         this.squares.push(square)
         this.length = this.squares.length
     }
-    squareHit(){
-        this.squaresHit++;
-    }
     checkOrientation(){
        if( (this.squares[0].value-this.squares[1].value) === 1 ||
             (this.squares[0].value-this.squares[1].value) === -1 ){
-                this.isHorizontal = true;
+                this.orientation = 'horizontal';
        }else {
-           this.isVertical = true;
+           this.orientation = 'vertical';
        }
     }
     checkSunk(){
@@ -70,8 +66,6 @@ class ShipSquare {
     constructor(square,value){
         this.value = value
         this.boardValue = convertTo(value)
-        // this.bv_x = convertVtoBV(value)[1]
-        // this.bv_y = convertVtoBV(value)[0]
         this.isHit = false
         this.selector = square
     }
@@ -122,13 +116,14 @@ const player2Board = document.querySelector('#player2')
 for (let i=0; i<numSquares; i++){
     let square = document.createElement("div");
     square.classList.add('square');
+    square.setAttribute('id','square2');
     // Give every new square a unique value
     square.setAttribute('value', i ); 
     // board.appendChild(square);
     square.innerHTML = `${square.getAttribute('value')}`
     player2Board.appendChild(square);
 }
-const squares2 = document.querySelectorAll('.square2')
+const squares2 = document.querySelectorAll('#square2')
 
 // Create x & y label squares
 const xLabel2 = document.querySelector('.x-label2')
@@ -180,6 +175,7 @@ const readyBtn = document.querySelector('#ready_btn')
 readyBtn.addEventListener('click', (event) => {
     event.preventDefault();
     board2.style.display = "flex"
+    gameText.innerHTML = "Pick a square on the Computer's board."
 })
 
 // Initialize Global Variables
@@ -240,15 +236,13 @@ squares.forEach( square => {
                 // Only allows legal ship squares to be recorded
                 if ( gameCount < sLL[i] && checkLegal(squareValue) ){
                     gameCount++;
+                    oldSquare = squareValue;
                     let shipSquare = new ShipSquare(square,squareValue)
 
                     // Add square to ship object
-                    ship.addSquare(shipSquare)
-
-
-                    // console.log(`gameCount: ${gameCount}`);
-                    oldSquare = squareValue;
+                    ship.addSquare(shipSquare);
                     shipArr.push(squareValue);
+
                     mainContainer.push(squareValue);
                     // console.log(`gameCount: ${gameCount} | shipArr.length: ${shipArr.length}`)
                     // console.log("shipArr: "); 
@@ -256,7 +250,7 @@ squares.forEach( square => {
                     colorShip(i,square);
                     // square.classList.add('red');
                     // console.log(square);
-                    gameText.innerHTML = `Place your ship. (${sL[i]} squares)`
+                    gameText.innerHTML = `Select squares horizontally or vertically to place your ship. (${sL[i]} squares)`
                     
                     
                     // When all shipSquares have been placed, the ship is ready to be created and added to player's array
@@ -280,10 +274,15 @@ squares.forEach( square => {
     })
 })
 
+squares2.forEach( square => {
+    square.addEventListener('click', (event) => {
+        event.preventDefault()
+        square.classList.add('orange');
+    })
+})
 
 // Function to check if square selected is "legal"
 function checkLegal(value){
-    // if(gameCount = 0 && shipArr.length === 0) return false
     let check1 = hasNotBeenPickedAlready(value)
     let check2 = isAdjacent(value)
     // console.log(`check1: ${check1}`);
@@ -359,54 +358,35 @@ let compAvailShots = make99();
 
 // Computer calls a shot
 function compShot(){
-    let randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
-
-    console.log(randomShot);
     if(mainContainer.length>0){
-        if(computerShots.includes(randomShot)){
-            // gameText.innerHTML = `Computer's shot was called already!`;
-            randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
-        }
-        if(compNextShot !== (-1)){
-            randomShot = compNextShot;
-        }
+        
+        let randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
+        
+        // if(compNextShot !== (-1)){
+        //      randomShot = compAvailShots.splice(compAvailShots.indexOf(randomShot), 1)[0];
+        // }
+        console.log(randomShot);
+
         computerShots.push(randomShot)
         compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 ); 
+        console.log(compAvailShots)
         squares.forEach(square => {
             if(randomShot=== parseInt(square.getAttribute('value'))){
                 if(mainContainer.includes(randomShot)){
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
-                    Marc.shipHit(convertTo(randomShot))
-                    square.classList.add('gray')
-                    
-
-                    if ( computerShots.includes( randomShot + 1 ) === false){
-                        compNextShot = randomShot + 1;
-                        compPrevShot = randomShot;
-                    } else if ( computerShots.includes( randomShot - 10 ) === false){
-                        compNextShot = randomShot + 1;
-                        compPrevShot = randomShot;
-                    } else if ( computerShots.includes( randomShot - 1 ) === false){
-                        compNextShot = randomShot - 1;
-                        compPrevShot = randomShot;
-                    } else if ( computerShots.includes( randomShot - 10 ) === false){
-                        compNextShot = randomShot - 10;
-                        compPrevShot = randomShot;
-                    } else {
-                        compNextShot = -1;
-                    }
-                    console.log(`compPrevShot: ${compPrevShot}`);
-                    console.log(`compNextShot: ${compNextShot}`);
+                    mainContainer.splice(mainContainer.indexOf(randomShot),1)[0];
+                    Marc.shipHit(convertTo(randomShot));
+                    square.classList.add('gray');
 
                 } else {
                     gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. Shot missed!`;
-                    square.classList.add('lightgray')
+                    square.classList.add('lightgray');
                     compNextShot = -1;
                 }
             }
         })
     } else {
-        gameText.innerHTML = `Computer sank all your ships`;
+        gameText.innerHTML = `Computer sank all your ships!!`;
     }
 }
 
