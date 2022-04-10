@@ -274,10 +274,23 @@ squares.forEach( square => {
     })
 })
 
+compShips = [0,1,50,51,52,27,37,47,83,84,85,86,39,49,59,69,79]
+console.log(compShips)
+
 squares2.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault()
-        square.classList.add('orange');
+        
+        if (activeGame){
+            let squareValue = parseInt(square.getAttribute('value'));
+            
+            if(compShips.indexOf(squareValue)> -1){
+                square.classList.add('red');
+            } else {
+                square.classList.add('pink');
+            }
+            compShot();
+        }
     })
 })
 
@@ -369,7 +382,7 @@ function compShot(){
 
         computerShots.push(randomShot)
         compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 ); 
-        console.log(compAvailShots)
+        // console.log(compAvailShots)
         squares.forEach(square => {
             if(randomShot=== parseInt(square.getAttribute('value'))){
                 if(mainContainer.includes(randomShot)){
@@ -387,6 +400,7 @@ function compShot(){
         })
     } else {
         gameText.innerHTML = `Computer sank all your ships!!`;
+        activeGame = false
     }
 }
 
