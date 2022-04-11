@@ -165,6 +165,7 @@ readyBtn.addEventListener('click', (event) => {
     board2.style.display = "flex"
     gameText.innerHTML = "Pick a square on the Computer's board."
     readyBtn.style.display = 'none';
+    playerTurn = true;
 })
 
 // Restart button
@@ -279,6 +280,7 @@ console.log(compShips)
 let mainContainer2 = []
 
 let compTurn = false;
+let playerTurn = false;
 
 // For each square2 event listener
 squares2.forEach( square => {
@@ -286,7 +288,7 @@ squares2.forEach( square => {
         event.preventDefault()
 
         
-        if (activeGame){
+        if (activeGame && playerTurn){
             let squareValue = parseInt(square.getAttribute('value'));
             // If square selected has a value already selected
             if(mainContainer2.indexOf(squareValue) === -1 && compShips.length !==0){
@@ -295,6 +297,7 @@ squares2.forEach( square => {
                     square.classList.add('red');
                     compShips.splice(compShips.indexOf(squareValue),1);
                     mainContainer2.push(squareValue);
+                    playerTurn = false;
                     compTurn = true;
                     if(compShips.length === 0){
                         compTurn = false;
@@ -305,9 +308,10 @@ squares2.forEach( square => {
                 } else {
                     square.classList.add('pink');
                     mainContainer2.push(squareValue);
+                    playerTurn = false;
                     compTurn = true;
                 }
-                compShot();
+                let compTimer = setTimeout(compShot,1500);
 
             }
         }
@@ -446,6 +450,7 @@ function compShot(){
                 compTurn = false;
             })
         }
+        playerTurn = true;
     }
 }
 
