@@ -184,10 +184,10 @@ readyBtn.addEventListener('click', (event) => {
 // Initialize Global Variables
 let activeGame = false; console.log(`activeGame: ${activeGame}`)
 let gameCount = -1; // Something to indicate game status: begining, place first ship, ...
-let shipArr = [];
+let shipArr = [];   // Keeps track of squares when building a ship
 let shipsArr = [];
-let mainContainer = [];
-let oldSquare = -1;
+let mainContainer = []; // All picked square values are stored so there is an overall bank that computer can pick and check from
+let oldSquare = -1;     // Variable used to check legal square pick conditions
 let sL = [2,3,3,4,5]; //shipLength - currently fixed, could implement function so it can be variable in the future
 // let sLL = [2,5,8,12,17] //add current and previous entries into current index, used for keeping up with gameCount
 
@@ -217,7 +217,7 @@ function colorShip(i,sq){
     else sq.classList.add('red')
 }
 
-// For each square event listener
+// For each square1 event listener
 squares1.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault();
@@ -227,8 +227,9 @@ squares1.forEach( square => {
             // Get square's value
             // console.log(square)
             
-            
+            // Converts and stores the square's attribute 'value'
             let squareValue = parseInt(square.getAttribute('value'));
+
             // console.log(`squareValue: ${squareValue}`);
             // console.log(`checkLegal: ${checkLegal(squareValue)}`)
             // console.log(`shipArr.length: ${shipArr.length}`)
@@ -253,7 +254,8 @@ squares1.forEach( square => {
                     colorShip(i,square);
                     // square.classList.add('red');
                     // console.log(square);
-                    gameText.innerHTML = `Select squares horizontally or vertically to place your ship. (${sL[i]} squares)`
+                    gameText.innerHTML = `Select squares to place your ship. (${sL[i]} squares)`
+                    // gameText.innerHTML = `Select squares horizontally or vertically to place your ship. (${sL[i]} squares)`
                     
                     
                     // When all shipSquares have been placed, the ship is ready to be created and added to player's array

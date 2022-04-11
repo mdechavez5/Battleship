@@ -1,4 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
 body {
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+}
+
+h2 {
     margin: 0 auto;
 }
 
@@ -6,6 +17,10 @@ div {
     display: flex;
     /* border: 1px solid red; */
     margin: 0 auto;
+}
+
+#test_btns {
+    display: none;
 }
 
 .testboard {
@@ -34,6 +49,9 @@ button:hover {
     background-color: lightgray;
     justify-content: center;
     align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: thin;
+    margin: 0 auto;
 }
 
 .container {
@@ -67,7 +85,7 @@ button:hover {
 .x-label {
     height: 56px;
     width: 610px;
-    margin: 0 auto;
+    margin: 0;
     justify-content: center;    
     align-items: center;  
     align-content: space-between;
