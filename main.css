@@ -180,6 +180,10 @@ button:hover {
     display: none;
 }
 
+#restart_btn {
+    display: none;
+}
+
 .red {
     background-color: red;
 }

@@ -4,7 +4,7 @@ class Player {
         this.wins = 0
         this.ships = []
     }
-    wins(){
+    winsGame(){
         this.wins++
     }
     addShip(ship){
@@ -90,7 +90,7 @@ for (let i=0; i<numSquares; i++){
     // Give every new square a unique value
     square.setAttribute('value', i ); 
     // board.appendChild(square);
-    square.innerHTML = `${square.getAttribute('value')}`
+    // square.innerHTML = `${square.getAttribute('value')}`    // Labels each square (for Testing)
     player1Board.appendChild(square);
 }
 const squares1 = document.querySelectorAll('.square')
@@ -121,7 +121,7 @@ for (let i=0; i<numSquares; i++){
     // Give every new square a unique value
     square.setAttribute('value', i ); 
     // board.appendChild(square);
-    square.innerHTML = `${square.getAttribute('value')}`
+    // square.innerHTML = `${square.getAttribute('value')}`        // Labels each square (for Testing)
     player2Board.appendChild(square);
 }
 const squares2 = document.querySelectorAll('#square2')
@@ -140,20 +140,6 @@ for (let i=0; i<gameWidth; i++) {
     yLabel2.appendChild(ysquareLabel);
 }
 // --------------------------------------------------
-
-// Text Buttons
-const testBtn1 = document.querySelector('#test_btn1')
-testBtn1.addEventListener('click', (event) => {
-    event.preventDefault();
-    console.log(`testBtn1 - shipsArr - Marc.ships:`);
-    // console.log(shipsArr)
-    console.log(Marc.ships)
-})
-const testBtn2 = document.querySelector('#test_btn2')
-testBtn2.addEventListener('click', (event) => {
-    event.preventDefault();
-    compShot();
-})
 
 // Create a player object
 const Marc = new Player();
@@ -179,6 +165,11 @@ readyBtn.addEventListener('click', (event) => {
     board2.style.display = "flex"
     gameText.innerHTML = "Pick a square on the Computer's board."
     readyBtn.style.display = 'none';
+})
+
+const restartBtn = document.getElementById('restart_btn')
+restartBtn.addEventListener('click', (event) => {
+    event.preventDefault();
 })
 
 // Initialize Global Variables
@@ -281,9 +272,14 @@ squares1.forEach( square => {
     })
 })
 
+// Preset Computer's ship square locations
 compShips = [0,1,50,51,52,27,37,47,83,84,85,86,39,49,59,69,79]
 console.log(compShips)
+let mainContainer2 = []
 
+let compTurn = false;
+
+// For each square2 event listener
 squares2.forEach( square => {
     square.addEventListener('click', (event) => {
         event.preventDefault()
@@ -291,13 +287,28 @@ squares2.forEach( square => {
         
         if (activeGame){
             let squareValue = parseInt(square.getAttribute('value'));
-            
-            if(compShips.indexOf(squareValue)> -1){
-                square.classList.add('red');
-            } else {
-                square.classList.add('pink');
+            // If square selected has a value already selected
+            if(mainContainer2.indexOf(squareValue) === -1 && compShips.length !==0){
+                // If square selected has a value among the computer ships
+                if(compShips.indexOf(squareValue)> -1){
+                    square.classList.add('red');
+                    compShips.splice(compShips.indexOf(squareValue),1);
+                    mainContainer2.push(squareValue);
+                    compTurn = true;
+                    if(compShips.length === 0){
+                        compTurn = false;
+                        gameText.innerHTML = "You sank all of Computer's ships! You WIN!";
+                        Marc.winsGame();
+                        restartBtn.style.display = 'block'
+                    }
+                } else {
+                    square.classList.add('pink');
+                    mainContainer2.push(squareValue);
+                    compTurn = true;
+                }
+                compShot();
+
             }
-            compShot();
         }
     })
 })
@@ -397,36 +408,43 @@ let compAvailShots = make99();
 
 // Computer calls a shot
 function compShot(){
-    if(mainContainer.length>0){
-        
-        let randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
-        
-        // if(compNextShot !== (-1)){
-        //      randomShot = compAvailShots.splice(compAvailShots.indexOf(randomShot), 1)[0];
-        // }
-        // console.log(randomShot);
+    if (compTurn){
 
-        computerShots.push(randomShot)
-        compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 ); 
-        // console.log(compAvailShots)
-        squares1.forEach(square => {
-            if(randomShot=== parseInt(square.getAttribute('value'))){
-                if(mainContainer.includes(randomShot)){
-                    gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
-                    mainContainer.splice(mainContainer.indexOf(randomShot),1)[0];
-                    Marc.shipHit(convertTo(randomShot));
-                    square.classList.add('gray');
+        if(mainContainer.length>0){
+            
+            let randomShot = compAvailShots[ randomBetween( 0, compAvailShots.length ) ];
+            
+            // if(compNextShot !== (-1)){
+            //      randomShot = compAvailShots.splice(compAvailShots.indexOf(randomShot), 1)[0];
+            // }
+            // console.log(randomShot);
+    
+            computerShots.push(randomShot)
+            compAvailShots.splice( compAvailShots.indexOf(randomShot), 1 ); 
+            // console.log(compAvailShots)
+            squares1.forEach(square => {
+                if(randomShot=== parseInt(square.getAttribute('value'))){
+                    if(mainContainer.includes(randomShot)){
+                        gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. It hit something!`;
+                        mainContainer.splice(mainContainer.indexOf(randomShot),1)[0];
+                        Marc.shipHit(convertTo(randomShot));
+                        square.classList.add('gray');
 
-                } else {
-                    gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. Shot missed!`;
-                    square.classList.add('lightgray');
-                    compNextShot = -1;
+                        if(mainContainer.length === 0){
+                            gameText.innerHTML = `Computer sank all your ships!!`;
+                            compTurn = false;
+                            activeGame = false;
+                        }
+    
+                    } else {
+                        gameText.innerHTML = `Computer chose ${convertTo(randomShot)}. Shot missed!`;
+                        square.classList.add('lightgray');
+                        compNextShot = -1;
+                    }
                 }
-            }
-        })
-    } else {
-        gameText.innerHTML = `Computer sank all your ships!!`;
-        activeGame = false
+                compTurn = false;
+            })
+        }
     }
 }
 
