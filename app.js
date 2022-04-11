@@ -295,6 +295,7 @@ squares2.forEach( square => {
                 // If square selected has a value among the computer ships
                 if(compShips.indexOf(squareValue)> -1){
                     square.classList.add('red');
+                    gameText.innerHTML = `Your choice ${convertTo(squareValue)} Hit!`
                     compShips.splice(compShips.indexOf(squareValue),1);
                     mainContainer2.push(squareValue);
                     playerTurn = false;
@@ -306,6 +307,7 @@ squares2.forEach( square => {
                         restartBtn.style.display = 'block'
                     }
                 } else {
+                    gameText.innerHTML = `Your choice ${convertTo(squareValue)} Missed!`
                     square.classList.add('pink');
                     mainContainer2.push(squareValue);
                     playerTurn = false;
