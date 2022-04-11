@@ -19,21 +19,6 @@ div {
     margin: 0 auto;
 }
 
-#test_btns {
-    display: none;
-}
-
-.testboard {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;    /*x-axis center */
-    /* align-items: center;*/   /*y-axis center*/
-    align-content: center;
-    height: 300px;
-    width: 300px;
-}
-
-
 button {
     height: 50px;
     width: 150px;

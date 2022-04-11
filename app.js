@@ -167,6 +167,7 @@ readyBtn.addEventListener('click', (event) => {
     readyBtn.style.display = 'none';
 })
 
+// Restart button
 const restartBtn = document.getElementById('restart_btn')
 restartBtn.addEventListener('click', (event) => {
     event.preventDefault();
