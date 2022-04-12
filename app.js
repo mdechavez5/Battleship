@@ -85,7 +85,7 @@ function createBoard(playerBoard){
     for (let i=0; i<gameHeight+1; i++){
         let gameRow = document.createElement('div')
         gameRow.classList.add('gameRow')
-        gameRow.style.height = `40px`
+        // gameRow.style.height = `30px`
         // The first row of the game board is the x-axis labels
         if(i===0){
             for(let j=0; j<gameWidth+1; j++){
@@ -119,7 +119,7 @@ function createBoard(playerBoard){
         playerBoard.appendChild(gameRow);
     }
     // Return the game squares
-    playerBoard.style.width = `${(gameWidth+1) * 40}px`
+    // playerBoard.style.width = `${(gameWidth+1) * 30}px`
     const squares = playerBoard.querySelectorAll('.square')
     return squares
 }
@@ -178,7 +178,7 @@ restartBtn.addEventListener('click', (event) => {
     computerShots = [];
     compShips = ['a.1','b.1','a.5','b.5','c.5','h.2','h.3','h.4','d.9','e.9','f.9','g.9','j.4','j.5','j.6','j.7','j.8']
     mainContainer2 = [];
-    board1Text.innerHTML = `Player Wins: ${player1.wins}<br><br>Place ships on a new board and see if you can win against the computer.`;
+    board1Text.innerHTML = `<br>Player Wins: ${player1.wins}<br>Place ships on a new board and see if you can win against the computer.`;
     startBtn.classList.toggle('hidden')
     restartBtn.classList.toggle('hidden')
     board2.classList.toggle('hidden')

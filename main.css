@@ -1,62 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
 
 body {
-    margin: 0;
+    display: flex;
+    flex-direction: column;
     font-family: 'Poppins', sans-serif;
+    width: 100%;
+    margin: 0;
 }
-
-/* div {
-    border: 1px solid red;
-}*/
-
 h1 {
     text-align: center;
-    font-size: 3em;
-    /* margin: 0 auto; */
+    font-size: 2em;
+    padding: 0 auto;
+    margin: 0 auto;
 }
-
-h3 {
-    text-align: center;
-}
-
 #game_text {
-    font-size: 1.5em;
+    font-size: 1em;
+    margin: 0 auto;
+    padding: 5px 0;
     background-color: lightgray;
     text-align: center;
 }
-
-span {
-    text-transform: uppercase;
-}
-
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    align-content: space-around;
+    align-content: space-between;
     width: 100%;
     padding: 0;
     margin: 0 auto;
+    flex-direction: column-reverse;
 }
-
 .board {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 25%;
-    width: 25%;
+    margin: 5px;
+}
+.board-text {
+    text-align: center;
     margin: 0 auto;
 }
-
-.row {
+.player-board {
+    padding: 0;
+    margin: 0;
+    width: 275px;
+}
+.gameRow {
     display: flex;
-    flex-direction: row;
-    height: 100%;
     width: 100%;
-    margin: 0 auto;
+    height: 25px;
 }
-
 .label {
     display: flex;
     height: 100%;
@@ -69,47 +61,30 @@ span {
     border: 1px solid white;
     background-color: lightgray;
 }
-
-.player-board {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.gameRow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
 .square {
-    display: flex;
-    height: 100%;
+    /* display: flex; */
+    /* height: 100%; */
     width: 100%;
-    justify-content: center;
-    align-items: center;
     font-size: 1em;
     border: 1px solid white;
     background-color: rgb(175, 225, 242);
 }
-
 .ctr-btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 1em;
     height: 50px;
     width: 150px;
     border: 1px solid white;
     border-radius: 25px;
     justify-content: center;
-    align-items: center;
-    align-content: space-between;
-    margin: 10px auto;
+    margin: 5px;
 }
 .ctr-btn:hover {
     background-color: lightblue;
+}
+span {
+    text-transform: uppercase;
 }
 
 .hidden {
@@ -150,4 +125,72 @@ span {
 
 .white {
     background-color: white;
+}
+
+@media screen and (min-width:400px){
+    .player-board {
+        width: 385px;
+    }
+    .gameRow {
+        height: 35px;
+    }
+}
+
+@media screen and (min-width:800px) {
+    h1 {
+        font-size: 3em;
+    }
+    #game_text {
+        font-size: 1.25rem;
+    }
+    .container{
+        flex-direction: row;
+        width: 800px;
+    }
+    .board{
+        margin: 20px auto;
+        align-content: space-around;
+    }
+    .board-text {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (min-width:940px) {
+    .container {
+        width: 940px;
+    }
+    h1 {
+        font-size: 4em;
+    }
+    #game_text {
+        font-size: 1.5rem;
+    }
+    .player-board {
+        width: 440px;
+    }
+    .gameRow {
+        height: 40px;
+    }
+    .ctr-btn {
+        font-size: 1.25em;
+        height: 50px;
+        width: 200px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .container {
+        width: 1200px;
+    }
+    .board {
+        align-content: center;
+    }
+    .player-board {
+        width: 550px;
+    }
+    .gameRow {
+        height: 50px;
+    }
+    
 }
