@@ -48,8 +48,7 @@ class Ship {
         })
         if(i === this.length){
             this.isSunk = true
-            gameText.innerHTML = "Ship sunk!"
-            console.log("Ship sunk!");
+            gameText.innerHTML = `The ship has sunk!`
         }
     }
 }
@@ -179,7 +178,7 @@ restartBtn.addEventListener('click', (event) => {
     computerShots = [];
     compShips = ['a.1','b.1','a.5','b.5','c.5','h.2','h.3','h.4','d.9','e.9','f.9','g.9','j.4','j.5','j.6','j.7','j.8']
     mainContainer2 = [];
-    board1Text.innerHTML = '';
+    board1Text.innerHTML = `Player Wins: ${player1.wins}<br><br>Place ships on a new board and see if you can win against the computer.`;
     startBtn.classList.toggle('hidden')
     restartBtn.classList.toggle('hidden')
     board2.classList.toggle('hidden')
@@ -427,3 +426,5 @@ function compShot(){
         player1Turn = true;
     }
 }
+
+// New computer presets ['b.3','b.4','b.5','b.6','b.7','c.5','d.5','e.5','e.6','e.7','e.8','h.2','h.3','h.5','h.6','h.7','h.8']
