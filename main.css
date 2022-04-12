@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
 
 body {
-    margin: 0 auto;
+    margin: 0;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -9,7 +9,14 @@ body {
     border: 1px solid red;
 }*/
 
+h1 {
+    text-align: center;
+    font-size: 3em;
+    /* margin: 0 auto; */
+}
+
 #game_text {
+    font-size: 1.5em;
     background-color: lightgray;
     text-align: center;
 }
@@ -53,6 +60,7 @@ span {
     justify-content: center;
     align-items: center;
     font-size: 1em;
+    font-weight: bold;
     text-transform: uppercase;
     border: 1px solid white;
     background-color: lightgray;
@@ -94,7 +102,7 @@ span {
     justify-content: center;
     align-items: center;
     align-content: space-between;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 .ctr-btn:hover {
     background-color: lightblue;

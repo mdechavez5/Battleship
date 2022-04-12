@@ -31,7 +31,7 @@ class Player {
 class Ship {
     constructor(){
         this.length = 0
-        this.isShips = false
+        this.isSunk = false
         this.squares = []
     }
     addSquare(square){
@@ -70,6 +70,8 @@ const board1 = document.getElementById('board1')
 const board2 = document.getElementById('board2')
 const player1Board = document.getElementById('player1')
 const player2Board = document.getElementById('player2')
+const board1Text = document.getElementById('board1_text')
+const board2Text = document.getElementById('board2_text')
 
 // Gameboard Width & Height
 let gameHeight = 10
@@ -84,7 +86,7 @@ function createBoard(playerBoard){
     for (let i=0; i<gameHeight+1; i++){
         let gameRow = document.createElement('div')
         gameRow.classList.add('gameRow')
-        gameRow.style.height = `50px`
+        gameRow.style.height = `40px`
         // The first row of the game board is the x-axis labels
         if(i===0){
             for(let j=0; j<gameWidth+1; j++){
@@ -102,7 +104,6 @@ function createBoard(playerBoard){
                     let labely = document.createElement('div')
                     labely.classList.add('label');
                     labely.innerHTML = i;
-                    // labely.style.width = `${100/(gameWidth+1)}`
                     gameRow.appendChild(labely)
                 }else {
                     // All the squares after the label are game squares
@@ -110,7 +111,6 @@ function createBoard(playerBoard){
                     // Give every new square a unique board value (formated 'a.5')
                     square.setAttribute('boardValue', (letter[j]+'.'+(i)) );
                     // square.innerHTML = `${square.getAttribute('boardValue')}`
-                    square.style.width = `${100/(gameWidth)}`
                     // Append square elements to the row element
                     gameRow.appendChild(square)
                 }
@@ -120,7 +120,7 @@ function createBoard(playerBoard){
         playerBoard.appendChild(gameRow);
     }
     // Return the game squares
-    playerBoard.style.width = `${(gameWidth+1) * 50}px`
+    playerBoard.style.width = `${(gameWidth+1) * 40}px`
     const squares = playerBoard.querySelectorAll('.square')
     return squares
 }
@@ -155,6 +155,7 @@ readyBtn.addEventListener('click', (event) => {
     board2.classList.toggle('hidden');
     readyBtn.classList.toggle('hidden');
     gameText.innerHTML = `Call a shot on the Computer's board`
+    board2Text.innerHTML = `Computer`
     vsComputer(squares2);
 })
 
@@ -178,6 +179,7 @@ restartBtn.addEventListener('click', (event) => {
     computerShots = [];
     compShips = ['a.1','b.1','a.5','b.5','c.5','h.2','h.3','h.4','d.9','e.9','f.9','g.9','j.4','j.5','j.6','j.7','j.8']
     mainContainer2 = [];
+    board1Text.innerHTML = '';
     startBtn.classList.toggle('hidden')
     restartBtn.classList.toggle('hidden')
     board2.classList.toggle('hidden')
@@ -189,8 +191,8 @@ function startGame(){
     let squares1 = createBoard(player1Board);
     // let squares2 = createBoard(player2Board)
     gameText.innerHTML = 'Select a square to start placing a ship'
-    console.log(`Ready to place ships`);
     activeGame = true;
+    board1Text.innerHTML = player1.name;
     placingShips(player1, squares1);
 }
 
@@ -319,7 +321,7 @@ function vsComputer(squares) {
                     // If square selected is among the computer's preset ship squares, it will mark a hit on Comp's board
                     if(compShips.indexOf(squareValue)> -1){
                         square.classList.add('red');
-                        gameText.innerHTML = `Your choice <span>${squareValue}</span> Hit!`
+                        gameText.innerHTML = `Your choice <span>${squareValue}</span> hit!`
                         // Remove hit square from Computer's preset list
                         compShips.splice(compShips.indexOf(squareValue),1);
                         // Push the selected square board value into Players's used picks array
@@ -336,7 +338,7 @@ function vsComputer(squares) {
                         }
                     } else {
                         // If square selected is not among the Computer's preset ship squares, then it is a miss
-                        gameText.innerHTML = `Your choice <span>${squareValue}</span> Missed!`
+                        gameText.innerHTML = `Your choice <span>${squareValue}</span> missed!`
                         square.classList.add('pink');
                         // Still add the selected square value into Player's used picks array
                         mainContainer2.push(squareValue);
@@ -398,7 +400,7 @@ function compShot(){
                 if( randomShot === square1.getAttribute('boardValue') ){
                     // If Player's main container contains Computer's shot, then it is a hit
                     if( mainContainer.includes(randomShot) ){
-                        gameText.innerHTML = `Computer chose <span>${randomShot}</span> . It hit something!`;
+                        gameText.innerHTML = `Computer chose <span>${randomShot}</span>.  It hit something!`;
                         mainContainer.splice( mainContainer.indexOf(randomShot),1 );
                         // Use Player class method to update a hit on Player's ships
                         player1.shipHit(randomShot);
@@ -406,12 +408,13 @@ function compShot(){
                         // If player's overall picks array is empty, Computer won
                         if(mainContainer.length === 0){
                             gameText.innerHTML = `Computer sank all your ships!!`;
+                            restartBtn.classList.toggle('hidden');
                             computerTurn = false;
                             activeGame = false;
                         }
                     } else {
                         // Computer's shot missed
-                        gameText.innerHTML = `Computer chose <span>${randomShot}</span> . Shot missed!`;
+                        gameText.innerHTML = `Computer chose <span>${randomShot}</span>.  Shot missed!`;
                         square1.classList.add('lightgray');
                         compNextShot = -1;
                     }
