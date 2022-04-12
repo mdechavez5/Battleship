@@ -5,7 +5,22 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 ## Link to GitHub Repository
 [Battleship Repository](https://github.com/mdechavez5/Battleship)
 
-[Battleship Git Page](https://mdechavez5.github.io/Battleship/)
+[Battleship GitHub Page](https://mdechavez5.github.io/Battleship/)
+
+## Technologies Used
+HTML, CSS, JavaScript
+
+## Wireframe
+![Battleship 1](https://user-images.githubusercontent.com/101363667/163061644-a64930e9-4f46-4ecc-8090-0665263b8bbd.png)
+![Battleship 2](https://user-images.githubusercontent.com/101363667/163061659-885a29ed-cf3f-48e7-bfb0-e60038e21dea.png)
+![Battleship 3](https://user-images.githubusercontent.com/101363667/163061670-32ea308d-2101-447f-9fb9-f95935389468.png)
+
+## Getting Started
+Navigate to the page on your browser. Click the start button and begin placing ships. 
+Instruction text on the top will let you know how many squares are left to pick to complete a ship. 
+The ready button will pop up when you're finished placing your ships.
+Click any square on your opponent's board to call out a shot.
+Play until one player's ships are all sunk!
 
 ## Basic User Stories
 1. As user, I want to be able to Start Game.
@@ -34,82 +49,5 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 2. Implementing ability to have a Player 2 as opponent
 3. Ability to change the sizes of the ships
 4. Ability to change the size of the board
-
-## Technologies Used
-HTML, CSS, JavaScript
-
-## Wireframe
-![Battleship 1](https://user-images.githubusercontent.com/101363667/163061644-a64930e9-4f46-4ecc-8090-0665263b8bbd.png)
-![Battleship 2](https://user-images.githubusercontent.com/101363667/163061659-885a29ed-cf3f-48e7-bfb0-e60038e21dea.png)
-![Battleship 3](https://user-images.githubusercontent.com/101363667/163061670-32ea308d-2101-447f-9fb9-f95935389468.png)
-
-## Pseudo Code
-```
-Start Game
-    Select [VS Another Player] or [VS Computer]
-    
-    VS Another Player
-        Player 1 Selects
-
-    VS Computer
-        Player 1 Selects Squares    (where to place the ships)
-            Check to see if Selected Squares are legal  
-                Most likely has to form a line (vertical/horizontal, no diagonals, no ship overlapping border, no overlapping each other)
-                No overlap
-            Check remaining pieces to be placed
-            Mark ready to play
-        
-        Turns
-            Randomly choose who goes first
-        
-        Player 1 Turn
-            Allow Computer's board to be marked
-            Mark a square on opponent's board
-                Check legal
-                Display text of marked square
-                Gray to mark location 
-                Red if hit
-                White if missed
-            Update a text display
-            If sank a ship
-                Display sank ship
-                Remove ship from Computer's array(?), Armada
-
-        Computer Turn
-            Allow Player 1's board to be marked
-            Run algorithm for choice
-            Mark a square on Player 1's board
-                Check legal
-                Display text of marked square
-                Gray to mark location
-                Red if hit
-                White if missed
-            Update a text display
-            If sank a ship
-                Display sank ship
-                Remove ship from Player 1's array(?), Armada
-```
-```
-Compiling Player Stats Function
-Display Stats Function
-Randomize Function
-Check Legal Square Function
-Allow board to be used Function
-
-Armada Class (players ship array(?) w/ their stats(?))
-Ship Class  (can i use preset ships so no changes to ships) 
-
-AI Placement Algorithm
-    Randomize first mark
-        Check if legal for every mark
-            Continue vertically or horizontally
-    Check inventory (remaining ships)
-
-AI Algorithm
-    If none hit
-        Randomly Choose
-    If has a hit
-        go for vertical or horizontal moves
-```
 
 ## Additional Comments for IAs, Instructors
