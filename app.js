@@ -77,63 +77,20 @@ let gameHeight = 10
 let gameWidth = 10
 let numSquares = gameWidth * gameHeight;
 
-// Function create gameboards w/ xaxis and yaxis labels
-function createBoard(playerBoard){
-    let alphabet = ' abcdefghijklmnopqrstuvwxyz';
-    let letter = alphabet.split('');
-    // Create a the rows for the game board
-    for (let i=0; i<gameHeight+1; i++){
-        let gameRow = document.createElement('div')
-        gameRow.classList.add('gameRow')
-        // gameRow.style.height = `30px`
-        // The first row of the game board is the x-axis labels
-        if(i===0){
-            for(let j=0; j<gameWidth+1; j++){
-                let labelx = document.createElement('div')
-                labelx.classList.add('label');
-                labelx.innerHTML = letter[j];
-                // labelx.style.width = `${100/(gameWidth+1)}`
-                gameRow.appendChild(labelx)
-            }
-        } else {
-            for(let j=0; j<gameWidth+1; j++){
-                let square = document.createElement("div");
-                // The first square in each row is a y-axis label
-                if(j===0){
-                    let labely = document.createElement('div')
-                    labely.classList.add('label');
-                    labely.innerHTML = i;
-                    gameRow.appendChild(labely)
-                }else {
-                    // All the squares after the label are game squares
-                    square.classList.add('square');
-                    // Give every new square a unique board value (formated 'a.5')
-                    square.setAttribute('boardValue', (letter[j]+'.'+(i)) );
-                    // square.innerHTML = `${square.getAttribute('boardValue')}`
-                    // Append square elements to the row element
-                    gameRow.appendChild(square)
-                }
-            }
-        }
-        // Append row elements to game board element
-        playerBoard.appendChild(gameRow);
-    }
-    // Return the game squares
-    // playerBoard.style.width = `${(gameWidth+1) * 30}px`
-    const squares = playerBoard.querySelectorAll('.square')
-    return squares
-}
-
 // Initializations
 let activeGame = false;
-let gameCount = -1;
-let oldSquare = [-1,-1];
-let sL = [2,3,3,4,5];
-let mainContainer = [];
-let shipIndex = 0
+let gameCount = -1;         
+let oldSquare = [-1,-1];    // Preset square
+let sL = [2,3,3,4,5];       // Set length of each ship
+let sLIndex = 0             // Ship length index - used for coloring ships
+let mainContainer = [];     // Container for Player's placing picks
+let mainContainer2 = [];    // Container for Player's calling picks
 let ship = new Ship()
 let player1Turn = false;
 let computerTurn = false;
+let computerShots = [];         // Records Computer's picks
+let compAvailShots = make99();  // Contains the available shots the Computer can make
+let compShips = ['a.1','b.1','a.5','b.5','c.5','h.2','h.3','h.4','d.9','e.9','f.9','g.9','j.4','j.5','j.6','j.7','j.8']
 const player1 = new Player('Player 1')
 const player2 = new Player('Player 2')
 
@@ -169,15 +126,15 @@ restartBtn.addEventListener('click', (event) => {
     gameCount = -1;
     oldSquare = [-1,-1];
     sL = [2,3,3,4,5];
+    sLIndex = 0
     mainContainer = [];
-    shipIndex = 0
-    player1.ships = [];
+    mainContainer2 = [];
     ship = new Ship()
     player1Turn = false;
     computerTurn = false;
     computerShots = [];
-    compShips = ['a.1','b.1','a.5','b.5','c.5','h.2','h.3','h.4','d.9','e.9','f.9','g.9','j.4','j.5','j.6','j.7','j.8']
-    mainContainer2 = [];
+    player1.ships = [];
+    compShips = ['b.3','b.4','b.5','b.6','b.7','c.5','d.5','e.5','e.6','e.7','e.8','h.2','h.3','h.5','h.6','h.7','h.8']
     board1Text.innerHTML = `<br>Player Wins: ${player1.wins}<br>Place ships on a new board and see if you can win against the computer.`;
     startBtn.classList.toggle('hidden')
     restartBtn.classList.toggle('hidden')
@@ -185,10 +142,54 @@ restartBtn.addEventListener('click', (event) => {
     gameText.innerHTML = `Press Start to play a new game.`
 })
 
+// Function create gameboards w/ xaxis and yaxis labels
+function createBoard(playerBoard){
+    let alphabet = ' abcdefghijklmnopqrstuvwxyz';
+    let letter = alphabet.split('');
+    // Create a the rows for the game board
+    for (let i=0; i<gameHeight+1; i++){
+        let gameRow = document.createElement('div')
+        gameRow.classList.add('gameRow')
+        // The first row of the game board is the x-axis labels
+        if(i===0){
+            for(let j=0; j<gameWidth+1; j++){
+                let labelx = document.createElement('div')
+                labelx.classList.add('label');
+                labelx.innerHTML = letter[j];
+                // labelx.style.width = `${100/(gameWidth+1)}`
+                gameRow.appendChild(labelx)
+            }
+        } else {
+            for(let j=0; j<gameWidth+1; j++){
+                let square = document.createElement("div");
+                // The first square in each row is a y-axis label
+                if(j===0){
+                    let labely = document.createElement('div')
+                    labely.classList.add('label');
+                    labely.innerHTML = i;
+                    gameRow.appendChild(labely)
+                }else {
+                    // All the squares after the label are game squares
+                    square.classList.add('square');
+                    // Give every new square a unique board value (formated 'a.5')
+                    square.setAttribute('boardValue', (letter[j]+'.'+(i)) );
+                    // square.innerHTML = `${square.getAttribute('boardValue')}`
+                    // Append square elements to the row element
+                    gameRow.appendChild(square)
+                }
+            }
+        }
+        // Append row elements to game board element
+        playerBoard.appendChild(gameRow);
+    }
+    // Return the game squares
+    const squares = playerBoard.querySelectorAll('.square')
+    return squares
+}
+
 // Function to Start a Game
 function startGame(){
     let squares1 = createBoard(player1Board);
-    // let squares2 = createBoard(player2Board)
     gameText.innerHTML = 'Select a square to start placing a ship'
     activeGame = true;
     board1Text.innerHTML = player1.name;
@@ -210,7 +211,7 @@ function placingShips(player,squares) {
                 // If player does not have the amount of ships needed to move on to the next phase
                 if(player.ships.length<sL.length){
                     // Checks if ship fully built, checks if squares selected are "legal"
-                    if(ship.length < sL[shipIndex] && checkLegal(squareValue)){
+                    if(ship.length < sL[sLIndex] && checkLegal(squareValue)){
                         // If square is allowed, pushed square's board value into an overall container array for player's squares
                         mainContainer.push(squareValue);
                         
@@ -220,21 +221,20 @@ function placingShips(player,squares) {
                         oldSquare = []
                         oldSquare.push(test2[0])
                         oldSquare.push(test2[1])
-                        
-                        colorShip(shipIndex,square)
+                        colorShip(sLIndex,square)
                         // Create new ShipSquare object from selected square
                         let shipSquare = new ShipSquare(square,squareValue)
                         // Add new ShipSquare object to the current ship being built
                         ship.addSquare(shipSquare)
-                        gameText.innerHTML = `Select ${(sL[shipIndex]-ship.squares.length)} more to finish the ship`
+                        gameText.innerHTML = `Select ${(sL[sLIndex]-ship.squares.length)} more to finish the ship`
                     }
                     // If the ship is finished being built
-                    if(ship.length === sL[shipIndex]){
+                    if(ship.length === sL[sLIndex]){
                         // Reset the oldSquare so player can select any other square, not needing to meet "legal" square conditions
                         oldSquare = [-1,-1]
                         // Add fully built ship to player's Ships array
                         player.addShip(ship)
-                        shipIndex++;
+                        sLIndex++;
                         // Create new Ship object for next ship
                         gameText.innerHTML = `Select a square to place new ship`
                         ship = new Ship()
@@ -260,20 +260,19 @@ function checkLegal(value){
     bV.push(test[1])
     let check1 = hasNotBeenPickedAlready(bV)
     let check2 = isAdjacent(bV)
-    // console.log(`check1: ${check1}  check2: ${check2}`)
     if( check1 && check2 ){
         return true
     } 
     return false
 }
-// Checks if the newly selected square is adjacent to the previously selected square (oldSquare)
+// Function checks if the newly selected square is adjacent to the previously selected square (oldSquare)
 function isAdjacent(boardValue){
     // If newly selected square's board value is the same as the preset for oldSquare
     if( oldSquare[0]===-1 && oldSquare[1]===-1 ){
         return true;
     }
-    // if letters match, can only go down or up
-    // if numbers match, can only go right or left
+    // If letters match, can only go down or up
+    // If numbers match, can only go right or left
     if( (boardValue[0] === oldSquare[0]) && ( (boardValue[1]-oldSquare[1])===1 || (boardValue[1]-oldSquare[1])===-1) ){
         return true
     } else if ( (boardValue[1] === oldSquare[1]) && ( oldSquare[0] === String.fromCharCode(boardValue[0].charCodeAt() + 1) || oldSquare[0] === String.fromCharCode(boardValue[0].charCodeAt() - 1) ) ){
@@ -281,12 +280,11 @@ function isAdjacent(boardValue){
     }
     return false;
 }
-// Checks if newly selected square has been picked already
+// Function checks if newly selected square has been picked already
 function hasNotBeenPickedAlready(boardValue) {
     // If first pick, no squares have been picked yet
     let test = ''
     test = boardValue[0] + '.' + boardValue[1]
-    // console.log(`hasNotBeenPickedAlready - test: ${test}`)
     if ( (oldSquare === boardValue) || mainContainer.includes(test) ){
         return false;
     }
@@ -302,13 +300,8 @@ function colorShip(i,sq){
     else sq.classList.add('red')
 }
 
-// Computer preset Ship Squares
-compShips = ['a.1','b.1','a.5','b.5','c.5','h.2','h.3','h.4','d.9','e.9','f.9','g.9','j.4','j.5','j.6','j.7','j.8']
-// Container for Player's used picks
-let mainContainer2 = [];
-
+// Function to start playing against Computer
 function vsComputer(squares) {
-    // console.log(squares)
     squares.forEach( square => {
         square.addEventListener('click', (event) =>{
             event.preventDefault();
@@ -357,7 +350,7 @@ function randomBetween(min, max){
     return Math.floor(Math.random() * (max-min) + min);
 }
 
-// Makes 100 entries of Board Values for the computer to choose from
+// Function makes 100 entries of Board Values for the computer to choose from
 function make99() {
     let alphabet = 'abcdefghijklmnopqrstuvwxyz';
     let letter = alphabet.split('');
@@ -370,13 +363,6 @@ function make99() {
     }
     return arr;
 }
-
-// Computer variable intialization
-let computerShots = [];
-let compPrevShot = -1   // Hopefully used to better Computer's picking algorithm
-let compNextShot = -1   // Hopefully used to better Computer's picking algorithm
-// Contains the available shots the Computer can make
-let compAvailShots = make99();
 
 // Function for Computer to call a shot
 function compShot(){
@@ -426,5 +412,3 @@ function compShot(){
         player1Turn = true;
     }
 }
-
-// New computer presets ['b.3','b.4','b.5','b.6','b.7','c.5','d.5','e.5','e.6','e.7','e.8','h.2','h.3','h.5','h.6','h.7','h.8']
