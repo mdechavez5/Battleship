@@ -5,6 +5,8 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 ## Link to GitHub Repository
 [Battleship Repository](https://github.com/mdechavez5/Battleship)
 
+[Battleship Git Page](https://mdechavez5.github.io/Battleship/)
+
 ## Basic User Stories
 1. As user, I want to be able to Start Game.
 2. As user, I want to select the squares to place my ships.
@@ -33,11 +35,13 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 3. Ability to change the sizes of the ships
 4. Ability to change the size of the board
 
-## Wireframe
-![Initial Framing](https://user-images.githubusercontent.com/101363667/162599006-203e84f3-87ff-46f1-aceb-65c25cbf5eaf.png)
-![ship objects](https://user-images.githubusercontent.com/101363667/162599008-c96eb15d-11c9-471b-9afa-cddbb2815efc.png)
+## Technologies Used
+HTML, CSS, JavaScript
 
-![Wireframe5](https://user-images.githubusercontent.com/101363667/162039194-ed1ab30e-7bfa-4a37-b2e4-98538ac1f791.png)
+## Wireframe
+![Battleship 1](https://user-images.githubusercontent.com/101363667/163061644-a64930e9-4f46-4ecc-8090-0665263b8bbd.png)
+![Battleship 2](https://user-images.githubusercontent.com/101363667/163061659-885a29ed-cf3f-48e7-bfb0-e60038e21dea.png)
+![Battleship 3](https://user-images.githubusercontent.com/101363667/163061670-32ea308d-2101-447f-9fb9-f95935389468.png)
 
 ## Pseudo Code
 ```
