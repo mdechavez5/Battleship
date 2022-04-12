@@ -21,10 +21,17 @@ Classic battleship board game made playable through HTML, CSS, and Javascript. A
 4. Ability to select a number of squares equal to one ship's length
 5. Record selected squares into Ship object
 6. Scale up. Be able to select and create more ships
-7. Add a function that simulates a computer calling a shot
-8. Display if one of Player's ships has been hit
-9. Display if a shot missed
-10. Display if the rest of a ship has been hit - ship has sunk
+7. Player ability to select square on opponent's board
+8. Add a function that simulates a computer calling a shot
+9. Display if one of Player's ships has been hit
+10. Display if a shot missed
+11. Display if the rest of a ship has been hit - ship has sunk
+
+## Stretch Goals
+1. Create a player object to record ships and wins
+2. Implementing ability to have a Player 2 as opponent
+3. Ability to change the sizes of the ships
+4. Ability to change the size of the board
 
 ## Wireframe
 ![Initial Framing](https://user-images.githubusercontent.com/101363667/162599006-203e84f3-87ff-46f1-aceb-65c25cbf5eaf.png)
